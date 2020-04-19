@@ -2,7 +2,7 @@
 
 require_once('Connection.php');
 
-$stmt = $conn->prepare("SELECT employee_id from employees);
+$stmt = $conn->prepare("SELECT employee_id from employees");
 $stmt->execute();
 
 echo "<table style='border: solid 1px black;'>";
