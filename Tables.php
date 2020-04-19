@@ -10,7 +10,7 @@ employee_id INT(6) PRIMARY KEY
 
 $entry = "INSERT INTO employees VALUES(10)";
 
-$conn->execute($sql);
+$conn->exec($sql);
 echo "Table created successfully";
 
 $conn->exec($entry);
