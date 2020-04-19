@@ -8,7 +8,7 @@ $sql = "CREATE TABLE if not exists employees(
 employee_id INT(6) PRIMARY KEY
 )";
 
-$entry = "INSERT INTO if not exists employees VALUES(10)";
+$entry = "INSERT INTO employees VALUES(20)";
 
 $conn->exec($sql);
 echo "Table created successfully";
