@@ -37,7 +37,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         // Prepare a select statement
         $sql = "SELECT userID, username, password FROM login WHERE username = :username";
         
-        if($stmt = $pdo->prepare($sql)){
+        if($stmt = $conn->prepare($sql)){
             // Bind variables to the prepared statement as parameters
             $stmt->bindParam(":username", $param_username, PDO::PARAM_STR);
             
@@ -82,7 +82,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     }
     
     // Close connection
-    unset($pdo);
+    unset($conn);
 }
 ?>
  

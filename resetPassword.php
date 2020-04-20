@@ -42,7 +42,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         // Prepare an update statement
         $sql = "UPDATE users SET password = :password WHERE id = :id";
         
-        if($stmt = $pdo->prepare($sql)){
+        if($stmt = $conn->prepare($sql)){
             // Bind variables to the prepared statement as parameters
             $stmt->bindParam(":password", $param_password, PDO::PARAM_STR);
             $stmt->bindParam(":id", $param_id, PDO::PARAM_INT);
@@ -67,7 +67,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     }
     
     // Close connection
-    unset($pdo);
+    unset($conn);
 }
 ?>
  
