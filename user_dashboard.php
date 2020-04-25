@@ -4,13 +4,7 @@ require_once "connection.php";
 session_start();
 
 
-// TODO Should probably have the logic of ADMIN vs Player in this file?
-
-
 if($_SERVER["REQUEST_METHOD"] != "POST") {
-
-
-
 
     $sql = "
     Select a.user_id as user_id, b.level AS u_level, 
@@ -49,6 +43,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     }
     if(isset($_POST['leaderBoard'])) {
         echo "Go To Leader Board";
+        // Redirect user to welcome page
+        header("location: user_leaderboard.php");
     }
     if(isset($_POST['avail_quests'])) {
         echo "Go To Available Quests";
