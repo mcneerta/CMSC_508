@@ -49,20 +49,24 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 // Check if username exists, if yes then verify password
                 if($stmt->rowCount() == 1){
                     if($row = $stmt->fetch()){
-                        $id = $row["userID"];
-                        $username = $row["username"];
-                        $hashed_password = $row["password"];
+                        $id = $row['userID'];
+                        $username = $row['username'];
+                        $hashed_password = $row['password'];
                         if(password_verify($password, $hashed_password)){
                             // Password is correct, so start a new session
                             session_start();
                             
                             // Store data in session variables
-                            $_SESSION["loggedin"] = true;
-                            $_SESSION["id"] = $id;
-                            $_SESSION["username"] = $username;                            
-                            
+                            $_SESSION['loggedin'] = true;
+                            $_SESSION['id'] = $id;
+                            $_SESSION['username'] = $username;
+
+                            // TODO need to send to page that will decide admin or regular user
+                            //  or create the logic here(not secure)
+
                             // Redirect user to welcome page
-                            header("location: test.php");
+                            header("location: user_dashboard.php");
+
                         } else{
                             // Display an error message if password is not valid
                             $password_err = "The password you entered was not valid.";
