@@ -35,7 +35,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     // Validate credentials
     if(empty($username_err) && empty($password_err)){
         // Prepare a select statement
-        $sql = "SELECT userID, username, password FROM login WHERE username = :username";
+        $sql = "SELECT login_id, username, password FROM tbl_login WHERE username = :username";
         
         if($stmt = $conn->prepare($sql)){
             // Bind variables to the prepared statement as parameters
@@ -49,7 +49,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 // Check if username exists, if yes then verify password
                 if($stmt->rowCount() == 1){
                     if($row = $stmt->fetch()){
-                        $id = $row['userID'];
+                        $id = $row['login_id'];
                         $username = $row['username'];
                         $hashed_password = $row['password'];
                         if(password_verify($password, $hashed_password)){
@@ -65,7 +65,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             //  or create the logic here(not secure)
 
                             // Redirect user to welcome page
-                            header("location: user_dashboard.php");
+                            header("location: login_redirect.php");
 
                         } else{
                             // Display an error message if password is not valid

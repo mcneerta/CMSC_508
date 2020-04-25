@@ -1,0 +1,174 @@
+--
+-- SET FOREIGN_KEY_CHECKS = 0;
+-- DROP TABLE IF EXISTS tbl_login;
+-- DROP TABLE IF EXISTS tbl_user;
+-- DROP TABLE IF EXISTS tbl_admin;
+-- DROP TABLE IF EXISTS tbl_player;
+-- DROP TABLE IF EXISTS tbl_question;
+-- DROP TABLE IF EXISTS tbl_quests;
+-- DROP TABLE IF EXISTS tbl_completedquest;
+-- DROP TABLE IF EXISTS tbl_chatroom;
+-- DROP TABLE IF EXISTS tbl_messages;
+-- DROP TABLE IF EXISTS tbl_monitor;
+-- SET FOREIGN_KEY_CHECKS = 1;
+--
+
+
+
+CREATE TABLE tbl_login(
+    login_id INT(9) AUTO_INCREMENT,
+    username varchar(255) NOT NULL UNIQUE,
+    password varchar(255) NOT NULL,
+    CONSTRAINT login_pk PRIMARY KEY (login_id));
+
+
+
+CREATE TABLE tbl_user(
+    user_ID INT(9) AUTO_INCREMENT,
+    login_id INT(9) NOT NULL,
+    first_name VARCHAR(20) NOT NULL,
+    last_name  VARCHAR(20) NOT NULL,
+    email VARCHAR(50) UNIQUE NOT NULL,
+    phone INT(10),
+    last_login TIMESTAMP,
+    CONSTRAINT user_pk PRIMARY KEY (user_ID),
+    CONSTRAINT user_fk1 FOREIGN KEY (login_id ) REFERENCES tbl_login(login_id));
+
+
+-- ALTER TABLE tbl_login ADD
+--     CONSTRAINT login_fk1 FOREIGN KEY (login_id) REFERENCES tbl_user(login_id);
+
+
+CREATE TABLE tbl_admin(
+    admin_id INT(9),
+    CONSTRAINT admin_pk PRIMARY KEY (admin_id),
+    CONSTRAINT admin_fk1 FOREIGN KEY (admin_id ) REFERENCES tbl_user(user_ID));
+
+
+CREATE TABLE tbl_player(
+    player_id INT(9) ,
+    level TINYINT NOT NULL DEFAULT 1,
+    CONSTRAINT player_pk PRIMARY KEY (player_id),
+    CONSTRAINT player_fk1 FOREIGN KEY (player_id) REFERENCES tbl_user(user_ID));
+
+
+
+CREATE TABLE tbl_question(
+    question_id INT(9) AUTO_INCREMENT,
+    question VARCHAR(400) NOT NULL,
+    answer_1 VARCHAR(200) NOT NULL,
+    answer_2 VARCHAR(200) NOT NULL,
+    answer_3 VARCHAR(200) NOT NULL,
+    answer_4 VARCHAR(200) NOT NULL,
+    correct TINYINT NOT NULL,
+    CONSTRAINT question_pk PRIMARY KEY (question_id ));
+
+
+CREATE TABLE tbl_quests(
+    quest_id INT(9) AUTO_INCREMENT,
+    quest_name VARCHAR(200) NOT NULL,
+    description VARCHAR(600) NOT NULL,
+    point_value INT(4) NOT NULL,
+    difficulty_level INT(2) NOT NULL,
+    question_id INT(9) NOT NULL,
+    image_a VARCHAR(1000),
+    image_b VARCHAR(1000),
+    lat_long VARCHAR(24),
+    added_by INT(9),
+    CONSTRAINT quests_pk PRIMARY KEY (quest_id),
+    CONSTRAINT quests_fk1 FOREIGN KEY (question_id ) REFERENCES tbl_question(question_id),
+    CONSTRAINT quests_fk2 FOREIGN KEY (added_by ) REFERENCES tbl_admin(admin_id));
+
+
+
+CREATE TABLE tbl_completedquest(
+    player_id INT(9),
+    quest_id INT(9),
+    points_earned INT(4) NOT NULL,
+    CONSTRAINT completedquest_pk PRIMARY KEY (player_id, quest_id),
+    CONSTRAINT completedquest_fk1 FOREIGN KEY (player_id ) REFERENCES tbl_player(player_id),
+    CONSTRAINT completedquest_fk2 FOREIGN KEY (quest_id ) REFERENCES tbl_quests(quest_id));
+
+
+
+
+
+CREATE TABLE tbl_chatroom(
+    chatroom_id INT(9) AUTO_INCREMENT,
+    status TINYINT DEFAULT 1, -- 0 FOR FALSE(CLOSED) , 1 FOR TRUE(OPEN)
+    created_by_id INT(9) NOT NULL,
+    CONSTRAINT chatroom_pk PRIMARY KEY (chatroom_id),
+    CONSTRAINT chatroom_fk1 FOREIGN KEY (created_by_id ) REFERENCES tbl_user(user_id));
+
+
+
+
+CREATE TABLE tbl_messages(
+    chatroom_id INT(9),
+    time_stamp  TIMESTAMP,
+    message VARCHAR(200) NOT NULL,
+    contributor_id INT(9) NOT NULL,
+    visible TINYINT DEFAULT 1, -- 0 FOR FALSE(NOT VISIBLE) , 1 FOR TRUE(VISIBLE)
+    CONSTRAINT messages_pk PRIMARY KEY (chatroom_id, time_stamp),
+    CONSTRAINT messages_fk1 FOREIGN KEY (chatroom_id ) REFERENCES tbl_chatroom(chatroom_id),
+    CONSTRAINT messages_fk2 FOREIGN KEY (contributor_id ) REFERENCES tbl_user(user_id));
+
+
+
+CREATE TABLE tbl_monitor(
+    chatroom_id INT(9),
+    monitor_id INT(9),
+    CONSTRAINT monitor_pk PRIMARY KEY (chatroom_id, monitor_id),
+    CONSTRAINT monitor_fk1 FOREIGN KEY (chatroom_id ) REFERENCES tbl_chatroom(chatroom_id),
+    CONSTRAINT monitor_fk2 FOREIGN KEY (monitor_id ) REFERENCES tbl_admin(admin_id));
+
+
+-- tbl_question
+
+
+
+
+
+
+INSERT INTO tbl_question ( question, answer_1, answer_2, answer_3, answer_4, correct )
+        VALUES
+            ("How many 'Light Bulb' fixtures are hanging from the ceiling?", "0", "1", "2", "3", 4),
+            ("How many points does the compass have?", "4", "8", "2", "5", 2),
+            ("Which of the following amenities CANNOT be found at the gym?", "Wave pool", "Rock-Climbing Wall", "Sauna", "Spin Classroom", 3),
+            ("Which food station is named after a famous rock album? ", "Sgt. Pepper", "Fan Fare", "Appetite for Destruction", "Salad Bar", 1),
+            ("Which dining location can be found inside?", "Chipotle", "Chick-fil-A", "Panda Express", "McDonald’s", 2),
+            ("What can be purchased in the Checkers House located in the center of the park?", "pencils", "tea", "candy", "Coffee (correct)", 4),
+            ("How many floors are in the library?", "5", "4", "3", "6", 2),
+            ("Before converted to an academic building, this music center was a--", "Synagogue", "Baptist Church", "Christian Science Church", "Funeral Home", 2),
+            ("Where is the exterior ticket office? ", "To the west, facing VCU student health", "On the back, facing Marshall St.", "Near the front entrance", "To the east, facing the VCU Athletic Village", 1),
+            ("There is one store in this building, which primarily sells...", "School Supplies", "Coffee", "Sandwiches", "Rams Merchandise", 3),
+            ("Counting the top pavement, how many stairs lead up to the front entrance?", "Six", "Eight", "Seven", "Nine", 4),
+            ("Which facility CANNOT be found in the Learning Commons?", "School of Social Work", "Writing Center", "Commons Theater", "Academic Learning Transformation Lab", 3),
+            ("What message is inscribed on the right side of the door jamb?", "“Tutankhamen: To whom life is given forever.”", "“Ra: The golden sailor in the sky.”", "“Ra: To whom we always look for warmth.”", "“Tutankhamen: Living image of Amon.”", 4),
+            ("Which of these facilities is NOT contained in the Larrick Student Center?", "A food court", "A gym", "A performing stage", "A coffee shop", 3),
+            ("Which of these surrounding buildings is closest to the hospital?", "White House of the Confederacy", "Patterson Memorial Garden", "VCU Pediatrics", "City Hall", 2),
+            ("In addition to Graphic Design, this remote center also houses the department of...", "Interior Design", "Communication Arts", "Cinema", "Craft and Material Studies", 1),
+            ("What designation is the parking lot closest to this building?", "TT", "ZZ", "LT", "W", 1);
+
+
+
+INSERT INTO tbl_quests ( quest_name, description, point_value , difficulty_level ,
+                        question_id , image_a , lat_long)
+        VALUES
+            ("Caffeine Crazy ", "A college town through and through, there’s no shortage of great cafés in North Richmond. Take this quest and learn some fun facts about Richmond’s various coffee shops.", 100, 1,1, "images/quest1.png", "37.548122,-77.453189"),
+            ("Get Your Bearings", "I point North, South , East and West. I help the lost and guide the rest. You can find me permanently implanted on the the VCU grounds, find me and I'll guide you.", 100, 1,2, "images/quest2.png", "37.5480991,-77.4533408"),
+            ("Get A Work Out", "VCU’s gym offers a variety of programmed group exercise classes as well as indoor pools, cardio and free weight equipment, a rock wall, basketball courts, an indoor running track, and more.", 100, 1,3, "images/quest101.png", "37.544214, -77.453671"),
+            ("Music and Food", "Shafer Court is a very popular dining location for many students with meal plans. Enjoy the all you can eat buffet at Market 810, which offers a diversity of foods everyday, or grab a quick bite to eat between classes at Shake Smart or Einstein Bros. Bagels.", 100, 1,4, "images/quest102.png", "37.548205, -77.452523"),
+            ("Grab Some Grub", "This location is often used as a meeting ground for many group/ club activities.  The building also features a theater, game rooms, a TV lounge, several dining venues, and a meditation room. You can find many students hanging out here in between or after classes.", 100, 1,5, "images/quest103.png", "37.546369, -77.453200"),
+            ("A Stroll in the Park", "Monroe Park located in the center of VCU’s Monroe Park Campus. It is named after the fifth President, James Monroe, and is considered Richmond’s oldest park.", 100, 1,6, "images/quest104.png", "37.546787, -77.450322"),
+            ("Bookworm", "Here, you can find an array of library services including thousands of academic books, study rooms, video and editing studios, a video game lounge, loanable media equipment, IT support, and more.", 100, 1,7, "images/quest105.png", "37.548087, -77.453254"),
+            ("Building With a New Puspose", "A pillar of the schools of Music and Performing Arts. The James Black Music Center includes a recital hall and classrooms, and lessons for all kinds of instruments are available.", 100, 2,8, "images/quest201.png", "37.548843, -77.454397"),
+            ("Tickets! Get Your Tickets!", "The Siegel Center is the home of VCU Rams, one of the top NCAA men’s basketball teams. Checking out a Rams home game is a must for any VCU student. ", 100, 2,9, "images/quest202.png", "37.552708, -77.453273"),
+            ("Business at Snead Hall", "Snead Hall holds the VCU School of Business. Connected to Engineering East and located in downtown Richmond, it’s an ideal spot for a budding business-minded Richmonder.", 100, 2,10, "images/quest203.png", "37.544799, -77.447806"),
+            ("Westside Engineers", "The younger of the two Engineering halls, Engineering West is a well-furnished facility with 24 labs, a machine shop and a 200-person auditorium. A great number of Engineering faculty offices are now located here.", 100, 2,11, "images/quest204.png", "37.545680, -77.449563"),
+            ("Something Missing", "Far from merely another student commons, the ALC houses a number of departments and vital student resources. Come by the ALC whenever you need academic help.", 100, 2,12, "images/quest205.png", "37.547407, -77.454532"),
+            ("The Egyptian Way", "A historic Richmond building and the first home of MCV, one of the schools which merged to become VCU. The Egyptian Building is treasured as one of the greatest Egyptian Revival-style buildings in the US.", 100, 3,13, "images/quest301.png", "37.539111, -77.429345"),
+            ("Something Missing", "The central resource on MCV campus. The Larrick Center contains Jonah’s food court and other amenities to provide MCV students a a healthy, comfortable experience. (Fun fact: you can still use your meal plan at Jonah’s if you’re a Monroe Park student!)", 100, 3,14, "images/quest302.png", "37.544573, -77.429686"),
+            ("Core of MCV", "No medical center would be complete without a main hospital. Opened in 1982, VCU’s main hospital is a vital part of the Richmond community.", 100, 3,15, "images/quest303.png", "37.539959, -77.429750"),
+            ("Graphic Design", "The Graphic Design Center is an outlier on Monroe Park Campus, located blocks away down Broad Street. Despite its remoteness, this center houses great classes in design-oriented art departments.", 100, 3,16, "images/quest304.png", "37.547923, -77.446162"),
+            ("Park and Dance", "The Dance Center houses the department of Dance and Choreography. Come by for a free show every semester, and pick up some snacks at the nearby cafés!", 100, 3,17, "images/quest305.png", "37.546955, -77.457114");

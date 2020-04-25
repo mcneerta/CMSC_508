@@ -14,7 +14,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         $username_err = "Please enter a username.";
     } else{
         // Prepare a select statement
-        $sql = "SELECT userID FROM login WHERE username = :username";
+        $sql = "SELECT login_id FROM tbl_login WHERE username = :username";
         
         if($stmt = $conn->prepare($sql)){
             // Bind variables to the prepared statement as parameters
@@ -62,7 +62,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     if(empty($username_err) && empty($password_err) && empty($confirm_password_err)){
         
         // Prepare an insert statement
-        $sql = "INSERT INTO login (username, password) VALUES (:username, :password)";
+        $sql = "INSERT INTO tbl_login (username, password) VALUES (:username, :password)";
          
         if($stmt = $conn->prepare($sql)){
             // Bind variables to the prepared statement as parameters

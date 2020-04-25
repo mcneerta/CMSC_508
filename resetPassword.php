@@ -40,7 +40,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     // Check input errors before updating the database
     if(empty($new_password_err) && empty($confirm_password_err)){
         // Prepare an update statement
-        $sql = "UPDATE users SET password = :password WHERE id = :id";
+        $sql = "UPDATE tbl_login SET password = :password WHERE login_id = :id";
         
         if($stmt = $conn->prepare($sql)){
             // Bind variables to the prepared statement as parameters
