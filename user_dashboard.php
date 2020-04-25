@@ -48,6 +48,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     }
     if(isset($_POST['avail_quests'])) {
         echo "Go To Available Quests";
+        header("location: user_avail_quests.php");
     }
     if(isset($_POST['comp_quests'])) {
         echo "Go To Completed Quests";
