@@ -9,7 +9,7 @@ if($_SERVER["REQUEST_METHOD"] != "POST") {
     $sql = "
     Select a.user_id as user_id, b.level AS u_level, 
     IFNULL((SELECT SUM(z.points_earned)  FROM tbl_completedquest z WHERE z.player_id = user_id), 0) AS total_points,
-        ((SELECT COUNT(*) FROM tbl_completedquest c INNER JOIN tbl_quests d WHERE c.player_id = user_id AND d.difficulty_level = u_level)
+        ((SELECT COUNT(*) FROM tbl_completedquest c INNER JOIN tbl_quests d USING(quest_id) WHERE c.player_id = user_id AND d.difficulty_level = u_level)
         /
         (SELECT COUNT(*) FROM tbl_quests e WHERE e.difficulty_level = u_level ))
     AS percent_complete
@@ -31,6 +31,7 @@ if($_SERVER["REQUEST_METHOD"] != "POST") {
             $level = $row['u_level'];
             $total_points = $row['total_points'];
             $percent_complete = $row['percent_complete'];
+            $percent_complete = round($percent_complete * 100);
 
         }
     }
@@ -88,7 +89,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     <p> Username: <?php echo $username ?> </p>
     <p> Current Points: <?php echo $total_points ?></p>
     <p> Level: <?php echo $level ?></p>
-    <p> Percentage Complete : <?php echo $percent_complete ?></p>
+    <p> Percentage Complete : <?php echo $percent_complete ?>%</p>
 
     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
         <div class="form-group">

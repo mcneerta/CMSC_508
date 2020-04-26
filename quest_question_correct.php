@@ -5,12 +5,23 @@ require_once "connection.php";
 session_start();
 $log_id = $_SESSION['id'];
 $cur_quest = $_SESSION['chosen_quest'];
+// call procedure here
+$sql_1 = "CALL quest_correct_answer(".$log_id.", ".$cur_quest.", @new_points);";
+$sql_2 = "SELECT @new_points AS points;";
 
 
 if($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['home'])) {
         // Redirect user to welcome page
         header("location: login_redirect.php");
+    }
+} else {
+    if(($stmt_1 = $conn->prepare($sql_1)) && ($stmt_2 = $conn->prepare($sql_2))){
+        if(($stmt_1->execute()) && ($stmt_2->execute())){
+            if ($row = $stmt_2->fetch()) {
+                $num_points = $row['points'];
+            }
+        }
     }
 }
 ?>
@@ -32,7 +43,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 <div class="wrapper">
     <h2>Yay! Correct Answer</h2>
     <p> The answer you chose was correct</p>
-    <p> You have earned: (max points)</p>
+    <p> You have earned: <?php echo $num_points ; ?></p>
 
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
             <div class="form-group">
