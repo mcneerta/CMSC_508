@@ -18,6 +18,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
         header("location: login_redirect.php");
     }
 
+    if (isset($_POST['Reset'])) {
+        header("location: resetPassword.php");
+    }
+
     // Check if firstname is empty
     if (empty(trim($_POST["firstName"]))) {
         $first_name_err = "1";
@@ -125,6 +129,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
         <div class="form-group">
             <input type="submit" name="Login" class="btn btn-primary" value="Submit">
+        </div>
+        <div class="form-group">
+            <input type="submit" name="Reset" class="btn btn-primary" value="Reset Password">
         </div>
         <div class="form-group">
             <input type="submit" name="Cancel" class="btn btn-primary" value="Cancel">
