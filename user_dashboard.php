@@ -40,6 +40,7 @@ if($_SERVER["REQUEST_METHOD"] != "POST") {
 if($_SERVER["REQUEST_METHOD"] == "POST"){
     if(isset($_POST['userprofile'])) {
         echo "Go To User Profile";
+        header("location: editAccount.php");
     }
     if(isset($_POST['leaderBoard'])) {
         echo "Go To Leader Board";
