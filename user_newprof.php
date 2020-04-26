@@ -15,6 +15,12 @@ $phone_err = $phone = "";
 
 if($_SERVER["REQUEST_METHOD"] == "POST"){
 
+    if(isset($_POST['Cancel'])) {
+        session_destroy();
+        header("location: login.php");
+        exit();
+    }
+
     // Check if firstname is empty
     if(empty(trim($_POST["firstName"]))){
         $first_name_err = "Invalid Entry.";
