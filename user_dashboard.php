@@ -26,7 +26,7 @@ if($_SERVER["REQUEST_METHOD"] != "POST") {
         if ($stmt->execute()){
 
             $row = $stmt->fetch();
-            $username = $_SESSION['username'];
+            $username = $row['username'];//$_SESSION['username'];
             $user_id = $row['user_id'];
             $level = $row['u_level'];
             $total_points = $row['total_points'];
