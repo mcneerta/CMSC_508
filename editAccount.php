@@ -59,11 +59,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         if($stmt = $conn->prepare($sql)){
 
             // Bind variables to the prepared statement as parameters
-            $stmt->bindParam(":login_id", $login_id, PDO::PARAM_STR);
+            //$stmt->bindParam(":login_id", $login_id, PDO::PARAM_STR);
             $stmt->bindParam(":first_name", $last_name, PDO::PARAM_STR);
-            $stmt->bindParam(":last_name", $last_name, PDO::PARAM_STR);
-            $stmt->bindParam(":email", $email, PDO::PARAM_STR);
-            $stmt->bindParam(":phone", $phone, PDO::PARAM_STR);
+            //$stmt->bindParam(":last_name", $last_name, PDO::PARAM_STR);
+            //$stmt->bindParam(":email", $email, PDO::PARAM_STR);
+            //$stmt->bindParam(":phone", $phone, PDO::PARAM_STR);
 
             // Attempt to execute the prepared statement
             if($stmt->execute()){
