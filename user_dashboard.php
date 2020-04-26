@@ -115,7 +115,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         </div>
 
         <div class="form-group">
-            <input type="submit" class="btn btn-primary" name="delect_acc" value="Delete Account">
+            <input type="submit" class="btn btn-primary" name="delete_acc" value="Delete Account">
         </div>
     </form>
 
