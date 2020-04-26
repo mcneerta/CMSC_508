@@ -20,7 +20,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
     // Check if firstname is empty
     if(empty(trim($_POST["firstName"]))){
-        $first_name_err = "";
+        $first_name_err = "1";
     } else{
         $first_name = trim($_POST["firstName"]);
         $sql = $sql."UPDATE tbl_user SET first_name = :first_name
@@ -28,7 +28,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     }
     // Check if lastName is empty
     if(empty(trim($_POST["lastName"]))){
-        $last_name_err = "";
+        $last_name_err = "1";
     } else{
         $last_name = trim($_POST["lastName"]);
         $sql = $sql."UPDATE tbl_user SET last_name = :last_name
@@ -36,7 +36,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     }
     // Check if email is empty
     if(empty(trim($_POST["email"]))){
-        $email_err = "";
+        $email_err = "1";
     } else{
         $email = trim($_POST["email"]);
         $sql = $sql."UPDATE tbl_user SET email = :email
@@ -44,14 +44,14 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     }
     // Check if phone is empty
     if(empty(trim($_POST["phone"]))){
-        $phone_err = "";
+        $phone_err = "1";
     } else{
         $phone = trim($_POST["phone"]);
         $sql = $sql."UPDATE tbl_user SET phone = :phone
                 where login_id = :login_id;";
     }
 
-    if(empty($first_name_err) && empty($last_name_err) && empty($email_err) && empty($phone_err)){
+    //if(empty($first_name_err) && empty($last_name_err) && empty($email_err) && empty($phone_err)){
         // Prepare an insert statement
        // $sql = "UPDATE tbl_user SET first_name = :first_name, last_name = :last_name, email = :email, phone = :phone
                // where login_id = :login_id";
@@ -60,10 +60,18 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
             // Bind variables to the prepared statement as parameters
             $stmt->bindParam(":login_id", $login_id, PDO::PARAM_STR);
-            $stmt->bindParam(":first_name", $first_name, PDO::PARAM_STR);
-            $stmt->bindParam(":last_name", $last_name, PDO::PARAM_STR);
-            $stmt->bindParam(":email", $email, PDO::PARAM_STR);
-            $stmt->bindParam(":phone", $phone, PDO::PARAM_STR);
+            if(empty($first_name_err)) {
+                $stmt->bindParam(":first_name", $first_name, PDO::PARAM_STR);
+            }
+            if(empty($last_name_err)) {
+                $stmt->bindParam(":last_name", $last_name, PDO::PARAM_STR);
+            }
+            if(empty($email_err)) {
+                $stmt->bindParam(":email", $email, PDO::PARAM_STR);
+            }
+            if(empty($phone_err)) {
+                $stmt->bindParam(":phone", $phone, PDO::PARAM_STR);
+            }
 
             // Attempt to execute the prepared statement
             if($stmt->execute()){
@@ -76,7 +84,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             // Close statement
             unset($stmt);
         }
-    }
+    //}
 
 }
 ?>
