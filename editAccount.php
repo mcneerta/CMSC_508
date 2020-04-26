@@ -31,7 +31,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         $last_name_err = "";
     } else{
         $last_name = trim($_POST["lastName"]);
-        $sql = $sql + "UPDATE tbl_user SET last_name = :last_name
+        $sql = $sql."UPDATE tbl_user SET last_name = :last_name
                 where login_id = :login_id;";
     }
     // Check if email is empty
@@ -39,7 +39,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         $email_err = "";
     } else{
         $email = trim($_POST["email"]);
-        $sql = $sql + "UPDATE tbl_user SET email = :email
+        $sql = $sql."UPDATE tbl_user SET email = :email
                 where login_id = :login_id;";
     }
     // Check if phone is empty
@@ -47,7 +47,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         $phone_err = "";
     } else{
         $phone = trim($_POST["phone"]);
-        $sql = $sql + "UPDATE tbl_user SET phone = :phone
+        $sql = $sql."UPDATE tbl_user SET phone = :phone
                 where login_id = :login_id;";
     }
 
