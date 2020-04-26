@@ -60,6 +60,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         echo "This will be a Logout";
         header("location: logout.php");
     }
+    if(isset($_POST['delete_acc'])) {
+        header("location: deleteAccount.php");
+    }
 }
 
     ?>
@@ -109,6 +112,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
         <div class="form-group">
             <input type="submit" class="btn btn-primary" name="logout" value="Log out">
+        </div>
+
+        <div class="form-group">
+            <input type="submit" class="btn btn-primary" name="delect_acc" value="Delete Account">
         </div>
     </form>
 
