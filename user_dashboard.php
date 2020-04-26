@@ -58,6 +58,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     }
     if(isset($_POST['logout'])) {
         echo "This will be a Logout";
+        header("location: logout.php");
     }
 }
 

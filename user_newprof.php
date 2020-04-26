@@ -25,7 +25,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     if(empty(trim($_POST["lastName"]))){
         $last_name_err = "Invalid Entry.";
     } else{
-        $last_name = trim($_POST["lasttName"]);
+        $last_name = trim($_POST["lastName"]);
     }
     // Check if email is empty
     if(empty(trim($_POST["email"]))){
