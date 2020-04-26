@@ -7,7 +7,10 @@ $cur_quest = $_SESSION['chosen_quest'];
 
 if($_SERVER["REQUEST_METHOD"] != "POST") {
 
-    $sql = "SELECT * FROM tbl_quests WHERE quest_id = ".$cur_quest." ;";
+    $sql = "SELECT * , 
+            (SELECT IFNULL(COUNT(*),0)  FROM tbl_completedquest a
+                    WHERE a.quest_id = ".$cur_quest.") AS done_by
+            FROM tbl_quests b WHERE b.quest_id = ".$cur_quest." ;";
 
 
     if ($stmt = $conn->prepare($sql)){
@@ -21,6 +24,7 @@ if($_SERVER["REQUEST_METHOD"] != "POST") {
                 $q_lvl = $row['difficulty_level'];
                 $q_img = $row['image_a'];
                 $q_question_id = $row['question_id'];
+                $done_by = $row['done_by'];
             }
         }
     }
@@ -29,6 +33,9 @@ if($_SERVER["REQUEST_METHOD"] != "POST") {
 if ($_SERVER["REQUEST_METHOD"] == "POST"){
     if(isset($_POST['cancel'])){
         header("location: user_avail_quests.php");
+    }
+    if(isset($_POST['answer'])){
+        header("location: quest_question.php");
     }
 }
 
@@ -52,13 +59,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 <div class="wrapper">
     <h2><?php echo $q_name; ?></h2>
     <img src="<?php echo $q_img; ?>" alt="<?php echo $q_img; ?>">
-    <p> <?php echo $q_desc; ?></p>
-<!--    <p> Question: (Question)</p>-->
-<!--    <p> (List of Clickable Answers)</p>-->
+    <p> Description :<?php echo $q_desc; ?></p>
+    <p> Level: <?php echo $q_lvl; ?></p>
+    <p> Max Points: <?php echo $q_pts; ?></p>
+    <p> Completed by: <?php echo $done_by ; ?></p>
 
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
             <div class="form-group">
-                <input type="submit" class="btn btn-primary" value="Cancel">
+                <input type="submit" name="cancel" class="btn btn-primary" value="Cancel">
+            </div>
+            <div class="form-group">
+                <input type="submit" name="answer" class="btn btn-primary" value="Quiz Me!">
             </div>
         </form>
 </div>

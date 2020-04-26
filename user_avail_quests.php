@@ -3,7 +3,6 @@
 require_once "connection.php";
 session_start();
 
-$choices = [];
 
 $sql = "SELECT a.quest_id AS q_id, a.quest_name AS q_name
             FROM tbl_quests a
@@ -24,25 +23,17 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
     if ($stmt = $conn->prepare($sql)) {
         $stmt->bindValue(':login_id', $_SESSION["id"]);
-    //                    $stmt->bindValue(':login_id', 1);
         if ($stmt->execute()) {
-//            $counter = 0;
             while ($row = $stmt->fetch()) {
                 if(isset($_POST['quest_'.$row['q_id']])) {
                     $_SESSION['chosen_quest'] = $row['q_id'];
                     header("location: quest_selection.php");
                 }
-//                $choices[$counter] = $row['q_id'];
-//                $counter += 1;
             }
         }
     }
 
 }
-
-
-//unset($stmt);
-//unset($conn);
 
 ?>
 
@@ -63,6 +54,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             border-color: #2e6da4;
             height: 50px;
             width: 200px;
+            margin: 2px;
         }
     </style>
 </head>
