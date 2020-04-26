@@ -3,9 +3,9 @@
 require_once "connection.php";
 session_start();
 
-if($_SERVER["REQUEST_METHOD"] != "POST") {
-    
-    $sql = "SELECT a.quest_id AS q_id, a.quest_name AS q_name
+$choices = [];
+
+$sql = "SELECT a.quest_id AS q_id, a.quest_name AS q_name
             FROM tbl_quests a
             WHERE a.difficulty_level = 
                 (
@@ -15,16 +15,34 @@ if($_SERVER["REQUEST_METHOD"] != "POST") {
                 WHERE c.login_id = :login_id
                 )
             ORDER BY q_name ASC;";
-    
-}
+
 if($_SERVER["REQUEST_METHOD"] == "POST"){
     if(isset($_POST['home'])) {
         // Redirect user to welcome page
         header("location: login_redirect.php");
     }
 
+    if ($stmt = $conn->prepare($sql)) {
+        $stmt->bindValue(':login_id', $_SESSION["id"]);
+    //                    $stmt->bindValue(':login_id', 1);
+        if ($stmt->execute()) {
+//            $counter = 0;
+            while ($row = $stmt->fetch()) {
+                if(isset($_POST['quest_'.$row['q_id']])) {
+                    $_SESSION['chosen_quest'] = $row['q_id'];
+                    header("location: quest_selection.php");
+                }
+//                $choices[$counter] = $row['q_id'];
+//                $counter += 1;
+            }
+        }
+    }
+
 }
 
+
+//unset($stmt);
+//unset($conn);
 
 ?>
 
@@ -39,6 +57,13 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     <style type="text/css">
         body{ font: 14px sans-serif; }
         .wrapper{ width: 450px; padding: 20px; }
+        .btn-primary {
+            color: #fff;
+            background-color: #337ab7;
+            border-color: #2e6da4;
+            height: 50px;
+            width: 200px;
+        }
     </style>
 </head>
 <body>
@@ -48,25 +73,33 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
 
-            <ul>
+
                 <?php
                 if ($stmt = $conn->prepare($sql)){
                     $stmt->bindValue(':login_id', $_SESSION["id"]);
+//                    $stmt->bindValue(':login_id', 1);
                     if ($stmt->execute()){
+//                        $counter = 0;
                         while ($row = $stmt->fetch()) {
-                            echo "<li><a>$row[q_name]</a></li>";
+
+                            echo "<div class='form-group'>";
+                            $str = '<input type="submit" class="btn btn-primary" name="quest_'.$row['q_id'].'" value="'.$row['q_name'].'"';
+//                            echo "<input type='submit' class='btn btn-primary' name='quest_'".$row[q_id]." value='$row[q_name]'></input>";
+                            echo $str;
+                            echo "</div>";
+//                            $choices[$counter] = $row['q_id'];
+//                            $counter += 1;
                             }
                     }
                 }
                 ?>
 
-            </ul>
+
             
             
             <div class="form-group">
                 <input type="submit" class="btn btn-primary" name="home" value="HOME">
             </div>
-
         </form>
 </div>
 </body>

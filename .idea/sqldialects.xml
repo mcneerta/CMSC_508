@@ -2,6 +2,7 @@
 <project version="4">
   <component name="SqlDialectMappings">
     <file url="file://$PROJECT_DIR$/MySQLFile" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/quest_selection.php" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/user_avail_quests.php" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/user_dashboard.php" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/user_leaderboard.php" dialect="GenericSQL" />
