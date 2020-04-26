@@ -12,49 +12,46 @@ $email_err = $email = "";
 $phone_err = $phone = "";
 $sql = "";
 
-if($_SERVER["REQUEST_METHOD"] == "POST"){
+if($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    if(isset($_POST['Cancel'])) {
+    if (isset($_POST['Cancel'])) {
         header("location: login_redirect.php");
     }
 
     // Check if firstname is empty
-    if(empty(trim($_POST["firstName"]))){
+    if (empty(trim($_POST["firstName"]))) {
         $first_name_err = "1";
-    } else{
+    } else {
         $first_name = trim($_POST["firstName"]);
-        $sql = $sql."UPDATE tbl_user SET first_name = :first_name
+        $sql = $sql . "UPDATE tbl_user SET first_name = :first_name
                 where login_id = :login_id;";
     }
     // Check if lastName is empty
-    if(empty(trim($_POST["lastName"]))){
+    if (empty(trim($_POST["lastName"]))) {
         $last_name_err = "1";
-    } else{
+    } else {
         $last_name = trim($_POST["lastName"]);
-        $sql = $sql."UPDATE tbl_user SET last_name = :last_name
+        $sql = $sql . "UPDATE tbl_user SET last_name = :last_name
                 where login_id = :login_id;";
     }
     // Check if email is empty
-    if(empty(trim($_POST["email"]))){
+    if (empty(trim($_POST["email"]))) {
         $email_err = "1";
-    } else{
+    } else {
         $email = trim($_POST["email"]);
-        $sql = $sql."UPDATE tbl_user SET email = :email
+        $sql = $sql . "UPDATE tbl_user SET email = :email
                 where login_id = :login_id;";
     }
     // Check if phone is empty
-    if(empty(trim($_POST["phone"]))){
-        $phone_err = "1";
-    } else{
+    if (empty(trim($_POST["phone"]))) {
+        $phone_err = "All fields cannot be empty.";
+    } else {
         $phone = trim($_POST["phone"]);
-        $sql = $sql."UPDATE tbl_user SET phone = :phone
+        $sql = $sql . "UPDATE tbl_user SET phone = :phone
                 where login_id = :login_id;";
     }
 
-    //if(empty($first_name_err) && empty($last_name_err) && empty($email_err) && empty($phone_err)){
-        // Prepare an insert statement
-       // $sql = "UPDATE tbl_user SET first_name = :first_name, last_name = :last_name, email = :email, phone = :phone
-               // where login_id = :login_id";
+    if(empty($first_name_err) || empty($last_name_err) || empty($email_err) || empty($phone_err)){
 
         if($stmt = $conn->prepare($sql)){
 
@@ -84,7 +81,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             // Close statement
             unset($stmt);
         }
-    //}
+    }
 
 }
 ?>
@@ -109,17 +106,17 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         <div class="form-group <?php echo (!empty($first_name_err)) ? 'has-error' : ''; ?>">
             <label>First Name</label>
             <input type="text" name="firstName" class="form-control">
-            <span class="help-block"><?php echo $first_name_err; ?></span>
+            <!-- <span class="help-block"><?php echo $first_name_err; ?></span> -->
         </div>
         <div class="form-group <?php echo (!empty($last_name_err)) ? 'has-error' : ''; ?>">
             <label>Last Name</label>
             <input type="text" name="lastName" class="form-control">
-            <span class="help-block"><?php echo $last_name_err; ?></span>
+           <!-- <span class="help-block"><?php echo $last_name_err; ?></span> -->
         </div>
         <div class="form-group <?php echo (!empty($email_err)) ? 'has-error' : ''; ?>">
             <label>Email</label>
             <input type="email" name="email" class="form-control">
-            <span class="help-block"><?php echo $email_err; ?></span>
+           <!-- <span class="help-block"><?php echo $email_err; ?></span> -->
         </div>
         <div class="form-group <?php echo (!empty($phone_err)) ? 'has-error' : ''; ?>">
             <label>Phone</label>
