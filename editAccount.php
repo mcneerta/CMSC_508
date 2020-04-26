@@ -10,6 +10,7 @@ $first_name_err = $first_name = "";
 $last_name_err = $last_name = "";
 $email_err = $email = "";
 $phone_err = $phone = "";
+$sql = "";
 
 if($_SERVER["REQUEST_METHOD"] == "POST"){
 
@@ -19,33 +20,41 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
     // Check if firstname is empty
     if(empty(trim($_POST["firstName"]))){
-        $first_name_err = "First Name cannot be empty.";
+        $first_name_err = "";
     } else{
         $first_name = trim($_POST["firstName"]);
+        $sql = $sql + "UPDATE tbl_user SET first_name = :first_name
+                where login_id = :login_id;";
     }
     // Check if lastName is empty
     if(empty(trim($_POST["lastName"]))){
-        $last_name_err = "Last Name cannot be empty.";
+        $last_name_err = "";
     } else{
         $last_name = trim($_POST["lastName"]);
+        $sql = $sql + "UPDATE tbl_user SET last_name = :last_name
+                where login_id = :login_id;";
     }
     // Check if email is empty
     if(empty(trim($_POST["email"]))){
-        $email_err = "Email cannot be empty.";
+        $email_err = "";
     } else{
         $email = trim($_POST["email"]);
+        $sql = $sql + "UPDATE tbl_user SET email = :email
+                where login_id = :login_id;";
     }
     // Check if phone is empty
     if(empty(trim($_POST["phone"]))){
-        $phone_err = "Phone number cannot be empty.";
+        $phone_err = "";
     } else{
         $phone = trim($_POST["phone"]);
+        $sql = $sql + "UPDATE tbl_user SET phone = :phone
+                where login_id = :login_id;";
     }
 
     if(empty($first_name_err) && empty($last_name_err) && empty($email_err) && empty($phone_err)){
         // Prepare an insert statement
-        $sql = "UPDATE tbl_user SET first_name = :first_name, last_name = :last_name, email = :email, phone = :phone
-                where login_id = :login_id";
+       // $sql = "UPDATE tbl_user SET first_name = :first_name, last_name = :last_name, email = :email, phone = :phone
+               // where login_id = :login_id";
 
         if($stmt = $conn->prepare($sql)){
 
