@@ -23,7 +23,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         $first_name_err = "";
     } else{
         $first_name = trim($_POST["firstName"]);
-        $sql = $sql + "UPDATE tbl_user SET first_name = :first_name
+        $sql = $sql."UPDATE tbl_user SET first_name = :first_name
                 where login_id = :login_id;";
     }
     // Check if lastName is empty
