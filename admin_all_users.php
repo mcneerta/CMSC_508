@@ -9,14 +9,19 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     exit;
 }
 
+// if not post, first run query to verify admin user is logged in
 if($_SERVER["REQUEST_METHOD"] != "POST") {
     $sql = "SELECT a.login_id, b.username FROM tbl_user a INNER JOIN tbl_login b INNER JOIN  tbl_admin c ON a.login_id = b.login_id AND a.user_id = c.admin_id WHERE a.login_id = :login_id";
-
     if ($stmt = $conn->prepare($sql)){
         $stmt->bindValue(':login_id', $_SESSION["id"]);
         if ($stmt->execute()){
+
+            // if query proves user is admin/ continue to load page else go back to login redirect
             if($stmt->rowCount() == 1){
-                $username = $_SESSION['username'];
+//                $username = $_SESSION['username'];
+
+
+
             } else {
                 // Redirect user to user dashboard page
                 header("location: login_redirect.php");
@@ -24,33 +29,19 @@ if($_SERVER["REQUEST_METHOD"] != "POST") {
         }
     }
 }
+
 if($_SERVER["REQUEST_METHOD"] == "POST"){
+
     if(isset($_POST['userprofile'])) {
         echo "Go To User Profile";
         header("location: editAccount.php");
     }
-    if(isset($_POST['leaderBoard'])) {
-        echo "Go To Leader Board";
-        // Redirect user to welcome page
-        header("location: user_leaderboard.php");
-    }
-    if(isset($_POST['all_quests'])) {
-        echo "Go To All Quests";
-        
-    }
-    if(isset($_POST['all_users'])) {
-        echo "Go To all users";
-    }
-    if(isset($_POST['chatrooms'])) {
-        echo "Go To Chatrooms";
-    }
+
     if(isset($_POST['logout'])) {
         echo "This will be a Logout";
         header("location: logout.php");
     }
-    if(isset($_POST['delete_acc'])) {
-        header("location: deleteAccount.php");
-    }
+
 }
 
     ?>
@@ -70,7 +61,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 </head>
 <body>
 <div class="wrapper">
-    <h2>Administrative Dashboard</h2>
+    <h2>All Users</h2>
 
     <p> Username: <?php echo $username ?> </p>
     
@@ -79,29 +70,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             <input type="submit" class="btn btn-primary" name="userprofile" value="Go To My Profile">
         </div>
 
-        <div class="form-group">
-            <input type="submit" class="btn btn-primary" name="leaderBoard" value="Go To Leader Board">
-        </div>
-
-        <div class="form-group">
-            <input type="submit" class="btn btn-primary" name="all_quests" value="See All Quests">
-        </div>
-
-        <div class="form-group">
-            <input type="submit" class="btn btn-primary" name="all_users" value="View Users">
-        </div>
-
-        <div class="form-group">
-            <input type="submit" class="btn btn-primary" name="chatrooms" value="Go Chat Rooms">
-        </div>
-
-        <div class="form-group">
-            <input type="submit" class="btn btn-primary" name="logout" value="Log out">
-        </div>
-
-        <div class="form-group">
-            <input type="submit" class="btn btn-primary" name="delete_acc" value="Delete Account">
-        </div>
     </form>
 
 

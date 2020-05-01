@@ -3,7 +3,11 @@
 require_once "connection.php";
 session_start();
 
-// verify user is Admin
+// Check if the user is logged in, otherwise redirect to login page
+if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
+    header("location: login.php");
+    exit;
+}
 
 
 $sql = "SELECT a.quest_id AS q_id, a.quest_name AS q_name, a.difficulty_level AS q_level, b.points_earned AS q_points
@@ -15,25 +19,6 @@ $sql = "SELECT a.quest_id AS q_id, a.quest_name AS q_name, a.difficulty_level AS
             WHERE c.login_id = :login_id
             ORDER BY q_level, q_name;";
 
-//if($_SERVER["REQUEST_METHOD"] != "POST"){
-//    if(isset($_POST['home'])) {
-//        // Redirect user to welcome page
-//        header("location: login_redirect.php");
-//    }
-//
-//    if ($stmt = $conn->prepare($sql)) {
-//        $stmt->bindValue(':login_id', $_SESSION["id"]);
-//        if ($stmt->execute()) {
-//            while ($row = $stmt->fetch()) {
-//                if(isset($_POST['quest_'.$row['q_id']])) {
-//                    $_SESSION['chosen_quest'] = $row['q_id'];
-//                    header("location: quest_selection.php");
-//                }
-//            }
-//        }
-//    }
-//
-//}
 
 ?>
 
