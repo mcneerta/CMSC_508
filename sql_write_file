@@ -61,6 +61,7 @@ CREATE TABLE tbl_question(
                              answer_3 VARCHAR(200) NOT NULL,
                              answer_4 VARCHAR(200) NOT NULL,
                              correct TINYINT NOT NULL,
+                              int not null,
                              CONSTRAINT question_pk PRIMARY KEY (question_id ));
 
 

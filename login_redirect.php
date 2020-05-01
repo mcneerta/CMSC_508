@@ -23,7 +23,8 @@ if ($stmt->execute()){
 
         if ($stmt1->execute()){
             if($stmt1->rowCount() == 1){
-                echo "Should be redirected to admin dashboard";
+                echo "<p>Should be redirected to admin dashboard</p>";
+                header("location: admin_dashboard.php");
             } else {
                 // Redirect user to user dashboard page
                 header("location: user_dashboard.php");
@@ -37,7 +38,7 @@ if ($stmt->execute()){
 unset($stmt);
 
 
-echo "Something went wrong";
+echo "<p>Something went wrong</p>";
 
 // Close statement
 unset($stmt1);
