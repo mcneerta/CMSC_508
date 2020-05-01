@@ -18,13 +18,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     }
 
     if ($stmt = $conn->prepare($sql)) {
-        $stmt->bindValue(':login_id', $_SESSION["id"]);
         if ($stmt->execute()) {
             while ($row = $stmt->fetch()) {
-                if(isset($_POST['quest_'.$row['id']])) {
-                    $_SESSION['chosen_quest'] = $row['q_id'];
-                    echo "<p>Sending you to the chosen chatroom in the future</p>";
-//                    header("location: chatroom_selection.php");
+                if(isset($_POST['chat_'.$row['chatroom_id']])) {
+                    $_SESSION['chosen_chatroom'] = $row['chatroom_id'];
+//                    echo "<p>Sending you to the chosen chatroom in the future</p>";
+                    header("location: messages.php");
                 }
             }
         }
@@ -72,7 +71,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 while ($row = $stmt->fetch()) {
 
                     echo "<div class='form-group'>";
-                    $str = '<input type="submit" class="btn btn-primary" name="quest_'.$row['chatroom_id'].'" value="'.$row['title'].'"';
+                    $str = '<input type="submit" class="btn btn-primary" name="chat_'.$row['chatroom_id'].'" value="'.$row['title'].'"';
                     echo $str;
                     echo "</div>";
                 }
