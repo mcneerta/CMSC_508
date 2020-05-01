@@ -19,7 +19,11 @@ $sql = "SELECT a.quest_id AS q_id, a.quest_name AS q_name, a.difficulty_level AS
             WHERE c.login_id = :login_id
             ORDER BY q_level, q_name;";
 
-
+if($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (isset($_POST['home'])) {
+        header("location: login_redirect.php");
+    }
+}
 ?>
 
 

@@ -39,7 +39,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         
     }
     if(isset($_POST['all_users'])) {
-        echo "Go To all users";
+        header("location: admin_all_users.php");
     }
     if(isset($_POST['chatrooms'])) {
         echo "Go To Chatrooms";
