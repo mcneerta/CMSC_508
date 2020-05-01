@@ -57,7 +57,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         header("location: user_compl_quests.php");
     }
     if(isset($_POST['chatrooms'])) {
-        echo "Go To Chatrooms";
+        header("location: chatrooms.php");
     }
     if(isset($_POST['logout'])) {
         header("location: logout.php");

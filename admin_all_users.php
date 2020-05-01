@@ -39,9 +39,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         header("location: login_redirect.php");
     }
 
-    if(isset($_POST['logout'])) {
-        echo "This will be a Logout";
-        header("location: logout.php");
+    if(isset($_POST['add_admin'])) {
+        echo "<p>Ability to add admin in the future</p>";
     }
 
 }
@@ -119,6 +118,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     </div>
     
     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+        <div class="form-group">
+            <input type="submit" class="btn btn-primary" name="add_admin" value="Add Administrator">
+        </div>
         <div class="form-group">
             <input type="submit" class="btn btn-primary" name="home" value="Home">
         </div>
