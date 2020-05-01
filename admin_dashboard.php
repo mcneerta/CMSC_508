@@ -42,7 +42,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         header("location: admin_all_users.php");
     }
     if(isset($_POST['chatrooms'])) {
-        echo "Go To Chatrooms";
+        header("location: chatrooms.php");
     }
     if(isset($_POST['logout'])) {
         echo "This will be a Logout";
