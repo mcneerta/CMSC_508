@@ -10,7 +10,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 }
 
 
-$sql = "SELECT a.message, a.time_stamp, c.username 
+$sql = "SELECT a.message, a.time_stamp, c.username, b.user_id
 FROM tbl_messages a 
     INNER JOIN tbl_user b 
     INNER JOIN tbl_login c 
@@ -18,15 +18,48 @@ FROM tbl_messages a
                AND b.login_id = c.login_id 
 WHERE a.chatroom_id = :chosen_chatroom 
   AND a.visible > 0
-ORDER BY a.time_stamp DESC;";
+ORDER BY a.time_stamp DESC ;";
 
+if ($stmt = $conn->prepare("SELECT user_id FROM tbl_user WHERE login_id = :login_id ;")) {
+    $stmt->bindValue(':login_id', $_SESSION['id']);
+    if ($stmt->execute()) {
+        if ($row = $stmt->fetch()) {
+            $user_id = $row['user_id'];
+        }
+    }
+}
 
 if($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['goback'])) {
         // Redirect user to welcome page
-        header("location: chatroom.php");
+        header("location: chatrooms.php");
+    }
+    if (isset($_POST['submit'])) {
+        if(!empty(trim($_POST["user_message"]))){
+            $message = trim($_POST["user_message"]);
+            $sql_message = "INSERT INTO tbl_messages(chatroom_id , time_stamp, message, contributor_id, visible) 
+                                VALUES( :chatroom_id, NOW(), :message, :user_id, 1)";
+            if ($stmt = $conn->prepare($sql_message)) {
+                $stmt->bindParam(":user_id", $user_id, PDO::PARAM_STR);
+                $stmt->bindParam(":chatroom_id", $_SESSION['chosen_chatroom'], PDO::PARAM_STR);
+                $stmt->bindParam(":message", $message, PDO::PARAM_STR);
+                if ($stmt->execute()) {
+                    // message uploaded
+                }
+            }
+        }
     }
 }
+
+if ($stmt = $conn->prepare("SELECT title FROM tbl_chatroom WHERE chatroom_id = :chosen_chatroom ;")) {
+    $stmt->bindValue(':chosen_chatroom', $_SESSION["chosen_chatroom"]);
+    if ($stmt->execute()) {
+        if ($row = $stmt->fetch()) {
+            $chatroom_name = $row['title'];
+        }
+    }
+}
+
 
 ?>
 
@@ -36,23 +69,95 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 <!DOCTYPE html>
 <head>
     <meta charset="UTF-8">
-    <title>User Dashboard</title>
+    <title>Chatroom</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
     <style type="text/css">
         body{ font: 14px sans-serif; }
         .wrapper{ width: 450px; padding: 20px; }
+        .container {
+            /*padding: 10px;*/
+            /*margin: 10px 0;*/
+            width: 100%;
+        }
+        .container_message {
+            border: 2px solid #dedede;
+            background-color: #f1f1f1;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px 0;
+            width: 80%;
+        }
+        .darker {
+            border-color: #ccc;
+            background-color: #ddd;
+        }
+        .right {
+            text-align: right;
+        }
+        .con_right {
+            float: right;
+        }
+        .username{
+            font-style: italic;
+            font-size: smaller;
+        }
+        .time-right{
+            font-style: italic;
+            font-size: xx-small;
+            float: right;
+        }
+        .time-left{
+            font-style: italic;
+            font-size: xx-small;
+        }
     </style>
 </head>
 <body>
 <div class="wrapper">
-    <h2>Chatrooms</h2>
+    <h2><?php echo $chatroom_name; ?></h2>
 
-    <p>Currently Unavailable</p>
-
+    <div class="pre-scrollable" >
+            <?php
+            if ($stmt = $conn->prepare($sql)){
+                $stmt->bindValue(':chosen_chatroom', $_SESSION["chosen_chatroom"]);
+                if ($stmt->execute()){
+                    while ($row = $stmt->fetch()) {
+                        if($row['user_id'] == $user_id){
+                            echo "<div class='container'>";
+                            echo "<div class='container_message darker con_right' >";
+                            echo "<div>";
+                            echo "<p class='right username'>".$row['username']."</p>";
+                            echo "</div>";
+                            echo "<div>";
+                            echo "<p class='right'>".$row['message']."</p>";
+                            echo "<span class='time-right'>".$row['time_stamp']."</span>";
+                            echo "</div>";
+                            echo "</div>";
+                            echo "</div>";
+                        } else {
+                            echo "<div class='container'>";
+                            echo "<div class='container_message' >";
+                            echo "<p class='username'>" . $row['username'] . "</p>";
+                            echo "<p>" . $row['message'] . "</p>";
+                            echo "<span class='time-left'>".$row['time_stamp']."</span>";
+                            echo "</div>";
+                            echo "</div>";
+                        }
+                    }
+                }
+            }
+            ?>
+    </div>
     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-
         <div class="form-group">
-            <input type="submit" class="btn btn-primary" name="goback" value="GO BACK">
+            <label>Message</label>
+            <input type="text" name="user_message" class="form-control">
+        </div>
+        <div class="form-group">
+            <input type="submit" class="btn btn-primary" name="submit" value="Submit">
+        </div>
+        <div class="form-group">
+            <input type="submit" class="btn btn-primary" name="goback" value="Go Back">
         </div>
     </form>
 
