@@ -27,7 +27,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                 } else {
                     // quest not completed yet
                     $num_attempts *= -1;
-                    $msg = "The max points you can earn now is: ".$points." points";
+                    $msg = "The max points you can earn now is: ".$num_attempts." points";
                 }
             }
         }
