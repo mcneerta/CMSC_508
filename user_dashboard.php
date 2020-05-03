@@ -9,7 +9,8 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     exit;
 }
 
-$user_id = 5;
+$user_id = 0;
+$percent_complete = 0;
 
 
 if($_SERVER["REQUEST_METHOD"] != "POST") {
