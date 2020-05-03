@@ -66,6 +66,20 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     body{ font: 14px sans-serif; }
         .wrapper{ width: 450px; padding: 20px; }
     </style>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 15px;
+            text-align: left;
+        }
+        table#t01 {
+            width: 100%;
+            background-color: #f1f1c1;
+        }
+    </style>
 </head>
 <body>
 <div class="wrapper">
