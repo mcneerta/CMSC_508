@@ -58,7 +58,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
 <div class="wrapper">
     <h2>Add Admin</h2>
-    <p>Please select a user from above to add as an admin.</p>
+    <p>Please select a user from above to add as an admin. (Careful! Once user is clicked option will be submitted)</p>
     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
         <div class="form-group">
             <input type="submit" class="btn btn-primary" name="home" value="HOME">
