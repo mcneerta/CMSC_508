@@ -40,7 +40,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     }
 
     if(isset($_POST['add_admin'])) {
-        echo "<p>Ability to add admin in the future</p>";
+        header("location: add_new_admin.php");
     }
 
 }
