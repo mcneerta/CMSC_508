@@ -68,10 +68,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             padding: 15px;
             text-align: left;
         }
-        table#t01 {
-            width: 100%;
-            background-color: #f1f1c1;
-        }
     </style>
 </head>
 <body>
@@ -81,7 +77,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     <p> Your Username: <?php echo $username ?> </p>
 
     <h3>Administrative Users</h3>
-    <table border="1">
+    <table>
         <tr>
             <th>User ID</th>
             <th>Username</th>

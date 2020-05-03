@@ -73,10 +73,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
             padding: 15px;
             text-align: left;
         }
-        table#t01 {
-            width: 100%;
-            background-color: #f1f1c1;
-        }
     </style>
 </head>
 <body>
