@@ -9,7 +9,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     exit;
 }
 
-    if (!isset($_POST['user_id'])) {
+    if (!isset($_GET['user_id'])) {
 
         // Retrieve list of users
         $stmt = $conn->prepare("SELECT user_id, first_name, last_name FROM tbl_user ORDER BY first_name, last_name");
