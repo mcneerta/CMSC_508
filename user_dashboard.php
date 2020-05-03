@@ -9,9 +9,6 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     exit;
 }
 
-$user_id = 0;
-//$percent_complete = 0;
-
 
 if($_SERVER["REQUEST_METHOD"] != "POST") {
 
@@ -65,7 +62,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     }
     if(isset($_POST['level_up'])) {
         if($percent_complete = 100){
-            $sql1 = "update tbl_player set level = level + 1 where player_id = $user_id";
+            $sql1 = "update tbl_player set level = level + 1 where player_id = :user_id";
             $sql2 = "
     Select a.user_id as user_id, b.level AS u_level, 
     IFNULL((SELECT SUM(z.points_earned)  FROM tbl_completedquest z WHERE z.player_id = user_id), 0) AS total_points,
@@ -79,8 +76,17 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     ON a.user_id = b.player_id
     WHERE a.login_id = :login_id;
     ";
-            if(($stmt_1 = $conn->prepare($sql1)) && ($stmt_2 = $conn->prepare($sql2))){
+            $sql3 = "select user_id from tbl_user where login_id = :login_id";
+            if(($stmt_1 = $conn->prepare($sql1)) && ($stmt_2 = $conn->prepare($sql2)) && ($stmt_3 = $conn->prepare($sql3))){
                 $stmt_2->bindValue(':login_id', $_SESSION["id"]);
+                $stmt_3->bindValue(':login_id', $_SESSION["id"]);
+
+                if($stmt_3->execute()){
+                    $row = $stmt_3->fetch();
+                    $user_id = $row['user_id'];
+                    $stmt_1->bindValue(':user_id', $user_id);
+                }
+
                 if($stmt_1->execute()){
 
                 }
@@ -92,7 +98,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
                     $row = $stmt_2->fetch();
                     $username = $_SESSION['username'];
-                    $user_id = $row['user_id'];
+
                     $level = $row['u_level'];
                     $total_points = $row['total_points'];
                     $percent_complete = $row['percent_complete'];
