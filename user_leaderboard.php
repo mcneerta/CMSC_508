@@ -8,13 +8,11 @@ if($_SERVER["REQUEST_METHOD"] != "POST") {
 
     // TODO currently rank is found by totaling counting all players that are at or above user points
     //  Ok for now, but if points are ever equivalent, the time the user earned the points may be needed as well
-    $sql_rank = "Select COUNT(*) AS rank
-    FROM 
-        tbl_user a
-        RIGHT JOIN tbl_player p
-        ON a.user_id = p.player_id
-    WHERE (SELECT IFNULL(SUM(b.points_earned),0) FROM tbl_completedquest b WHERE b.player_id 
-                    = (SELECT z.user_id FROM tbl_user z WHERE z.login_id = :login_id) )
+    $sql_rank = "Select COUNT(*) as ranking
+FROM tbl_user a right JOIN tbl_player p
+on a.user_id = p.player_id
+WHERE (SELECT IFNULL(SUM(b.points_earned),0) FROM tbl_completedquest b WHERE b.player_id 
+= (SELECT z.user_id FROM tbl_user z WHERE z.login_id = :login_id) )
             <=
             (SELECT IFNULL(SUM(c.points_earned),0) FROM tbl_completedquest c WHERE c.player_id 
                     = a.user_id);
