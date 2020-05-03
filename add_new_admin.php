@@ -23,7 +23,7 @@ if(isset($_GET['user_id'])) {
 if($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if (isset($_POST['home'])) {
-        header("location: login_redirect.php");
+        header("location: admin_dashboard.php");
     }
 }
 
