@@ -30,14 +30,16 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 
         $user_id = $_GET["user_id"];
 
-        $stmt = $conn->prepare("insert ignore into if not exists tbl_admin values($user_id)");
+        $stmt = $conn->prepare("insert into if not exists tbl_admin values($user_id)");
         $stmt->bindValue(':user_id', $user_id);
 
-        $stmt->execute();
+        if ($stmt->execute()) {
+            echo "New admin added successfully";
+        }
 
-        //$row = $stmt->fetch();
-        echo "New admin added successfully";
-
+        else{
+            echo "User is already an admin";
+        }
     }
 
 ?>
