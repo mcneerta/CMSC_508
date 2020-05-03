@@ -42,7 +42,7 @@ WHERE (SELECT IFNULL(SUM(b.points_earned),0) FROM tbl_completedquest b WHERE b.p
             
             $row = $stmt->fetch();
             $username = $_SESSION['username'];
-            $user_rank = $row['rank'];
+            $user_rank = $row['ranking'];
         }
     }
 }
