@@ -60,61 +60,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     if(isset($_POST['chatrooms'])) {
         header("location: chatrooms.php");
     }
-    if(isset($_POST['level_up'])) {
-        if($percent_complete = 100){
-            $sql1 = "update tbl_player set level = level + 1 where player_id = :user_id;";
-            $sql2 = "
-    Select a.user_id as user_id, b.level AS u_level, 
-    IFNULL((SELECT SUM(z.points_earned)  FROM tbl_completedquest z WHERE z.player_id = user_id), 0) AS total_points,
-        ((SELECT COUNT(*) FROM tbl_completedquest c INNER JOIN tbl_quests d USING(quest_id) WHERE c.player_id = user_id AND d.difficulty_level = u_level)
-        /
-        (SELECT COUNT(*) FROM tbl_quests e WHERE e.difficulty_level = u_level ))
-    AS percent_complete
-    FROM 
-    tbl_user a
-    INNER JOIN tbl_player b
-    ON a.user_id = b.player_id
-    WHERE a.login_id = :login_id;
-    ";
-            $sql3 = "select user_id from tbl_user where login_id = :login_id";
-            if(($stmt_1 = $conn->prepare($sql1)) && ($stmt_2 = $conn->prepare($sql2)) && ($stmt_3 = $conn->prepare($sql3))){
-                $stmt_2->bindValue(':login_id', $_SESSION["id"]);
-                $stmt_3->bindValue(':login_id', $_SESSION["id"]);
-
-                if($stmt_3->execute()){
-                    $row = $stmt_3->fetch();
-                    $user_id = $row['user_id'];
-                    $stmt_1->bindValue(':user_id', $user_id);
-                }
-
-                if($stmt_1->execute()){
-
-                }
-
-                else{
-                    echo "update not working";
-                }
-                if ($stmt_2->execute()) {
-
-                    $row = $stmt_2->fetch();
-                    $username = $_SESSION['username'];
-                    $level = $row['u_level'];
-                    $total_points = $row['total_points'];
-                    $percent_complete = $row['percent_complete'];
-                    $percent_complete = round($percent_complete * 100);
-
-                }
-                else{
-                    echo "sql didnt work";
-                }
-            }
-        }
-
-        else{
-            echo "You must complete all quests for your current level before leveling up.";
-        }
-
-    }
     if(isset($_POST['logout'])) {
         header("location: logout.php");
     }
@@ -166,10 +111,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
         <div class="form-group">
             <input type="submit" class="btn btn-primary" name="userprofile" value="Update User Info">
-        </div>
-
-        <div class="form-group">
-            <input type="submit" class="btn btn-primary" name="level_up" value="Level Up">
         </div>
 
         <div class="form-group">
