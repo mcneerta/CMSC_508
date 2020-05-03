@@ -46,6 +46,16 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
             margin: 2px;
         }
     </style>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 15px;
+            text-align: left;
+        }
+    </style>
 </head>
 <body>
 <div class="wrapper">
