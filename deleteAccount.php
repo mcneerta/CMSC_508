@@ -4,7 +4,8 @@ session_start();
 
 if($_SERVER["REQUEST_METHOD"] == "POST"){
     if(isset($_POST['Confirm'])) {
-        $sql = "DELETE FROM tbl_player  WHERE player_id = :id;
+        $sql = "SET FOREIGN_KEY_CHECKS = 0;
+                DELETE FROM tbl_player  WHERE player_id = :id;
                 DELETE FROM tbl_user  WHERE login_id = :id;
                 DELETE FROM tbl_login  WHERE login_id = :id";
 
