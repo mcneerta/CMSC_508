@@ -61,8 +61,28 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         header("location: chatrooms.php");
     }
     if(isset($_POST['level_up'])) {
+        $sqlPercent = "Select a.user_id as user_id, b.level AS u_level,  
+        ((SELECT COUNT(*) FROM tbl_completedquest c INNER JOIN tbl_quests d USING(quest_id) WHERE c.player_id = user_id AND d.difficulty_level = u_level)
+        /
+        (SELECT COUNT(*) FROM tbl_quests e WHERE e.difficulty_level = u_level ))
+    AS percent_complete
+    FROM 
+    tbl_user a
+    INNER JOIN tbl_player b
+    ON a.user_id = b.player_id
+    WHERE a.login_id = :login_id;
+    ";
+
+        if($stmt_4 = $conn->prepare($sqlPercent)){
+            if($stmt_4->execute()) {
+                $row = $stmt_4->fetch();
+                $percent_complete = $row['percent_complete'];
+                $percent_complete = round($percent_complete * 100);
+            }
+        }
+
         if($percent_complete = 100){
-            $sql1 = "update tbl_player set level = level + 1 where player_id = :user_id";
+            $sql1 = "update tbl_player set level = level + 1 where player_id = :user_id;";
             $sql2 = "
     Select a.user_id as user_id, b.level AS u_level, 
     IFNULL((SELECT SUM(z.points_earned)  FROM tbl_completedquest z WHERE z.player_id = user_id), 0) AS total_points,
@@ -98,7 +118,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
                     $row = $stmt_2->fetch();
                     $username = $_SESSION['username'];
-
                     $level = $row['u_level'];
                     $total_points = $row['total_points'];
                     $percent_complete = $row['percent_complete'];
