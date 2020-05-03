@@ -27,5 +27,19 @@ if($_SERVER["REQUEST_METHOD"] != "POST") {
         echo "</form>";
     }
 
+    else {
+
+        $user_id = $_POST["user_id"];
+
+        $stmt = $conn->prepare("insert into tbl_admin values($user_id)");
+        $stmt->bindValue(':user_id', $user_id);
+
+        $stmt->execute();
+
+        $row = $stmt->fetch();
+        echo "$row[first_name] $row[last_name] added successfully";
+
+    }
+
 }
 ?>
