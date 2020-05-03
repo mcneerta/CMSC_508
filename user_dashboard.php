@@ -9,7 +9,8 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     exit;
 }
 
-$user_id = 0;
+$user_id = 5;
+
 
 if($_SERVER["REQUEST_METHOD"] != "POST") {
 
@@ -90,6 +91,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                     $percent_complete = $row['percent_complete'];
                     $percent_complete = round($percent_complete * 100);
 
+                }
+                else{
+                    echo "sql didnt work";
                 }
             }
         }
