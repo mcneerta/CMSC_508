@@ -35,8 +35,8 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 
         $stmt->execute();
 
-        $row = $stmt->fetch();
-        echo "$row[first_name] $row[last_name] added successfully";
+        //$row = $stmt->fetch();
+        echo "New admin added successfully";
 
     }
 
