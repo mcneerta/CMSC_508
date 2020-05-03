@@ -33,7 +33,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         header("location: user_leaderboard.php");
     }
     if(isset($_POST['all_quests'])) {
-        header("location: user_leaderboard.php");
+        header("location: admin_all_quests.php");
         
     }
     if(isset($_POST['all_users'])) {
