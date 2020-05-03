@@ -34,7 +34,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
         $stmt->bindValue(':user_id', $user_id);
 
         if ($stmt->execute()) {
-            header("location: admin_dashboard.php");
+            header("location: admin_dashboard.php?success=1");
         }
 
         else{

@@ -9,6 +9,11 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     exit;
 }
 
+if ( isset($_GET['success']) && $_GET['success'] == 1 )
+{
+    echo "Admin added successfully";
+}
+
 if($_SERVER["REQUEST_METHOD"] != "POST") {
     $sql = "SELECT a.login_id, b.username FROM tbl_user a INNER JOIN tbl_login b INNER JOIN  tbl_admin c ON a.login_id = b.login_id AND a.user_id = c.admin_id WHERE a.login_id = :login_id";
 
