@@ -19,7 +19,7 @@ WHERE (SELECT IFNULL(SUM(b.points_earned),0) FROM tbl_completedquest b WHERE b.p
     ";
 
 
-    $sql_top10 = "Select c.username AS name, (SELECT IFNULL(SUM(f.points_earned),1) FROM tbl_completedquest f WHERE f.player_id = a.user_id) AS points
+    $sql_top10 = "Select c.username AS name, (SELECT IFNULL(SUM(f.points_earned),0) FROM tbl_completedquest f WHERE f.player_id = a.user_id) AS points
     FROM 
         tbl_user a
         INNER JOIN tbl_login c
