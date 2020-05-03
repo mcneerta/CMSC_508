@@ -80,7 +80,13 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     ";
             if(($stmt_1 = $conn->prepare($sql1)) && ($stmt_2 = $conn->prepare($sql2))){
                 $stmt_2->bindValue(':login_id', $_SESSION["id"]);
-                $stmt_1->execute();
+                if($stmt_1->execute()){
+
+                }
+
+                else{
+                    echo "update not working";
+                }
                 if ($stmt_2->execute()) {
 
                     $row = $stmt_2->fetch();
