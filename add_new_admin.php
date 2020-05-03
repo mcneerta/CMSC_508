@@ -8,6 +8,20 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     header("location: login.php");
     exit;
 }
+if(isset($_GET['user_id'])) {
+    $user_id = $_GET["user_id"];
+
+    $stmt = $conn->prepare("insert ignore into tbl_admin values($user_id)");
+    $stmt->bindValue(':user_id', $user_id);
+
+    if ($stmt->execute()) {
+        header("location: admin_dashboard.php?success=1");
+    }
+}
+
+else{
+    echo "User is already an admin";
+}
 
 if($_SERVER["REQUEST_METHOD"] == "POST") {
 
@@ -49,22 +63,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 
             echo "</select>";
             echo "</form>";
-        }
-
-        else {
-
-            $user_id = $_GET["user_id"];
-
-            $stmt = $conn->prepare("insert ignore into tbl_admin values($user_id)");
-            $stmt->bindValue(':user_id', $user_id);
-
-            if ($stmt->execute()) {
-                header("location: admin_dashboard.php?success=1");
-            }
-
-            else{
-                echo "User is already an admin";
-            }
         }
         ?>
         <div class="form-group">
