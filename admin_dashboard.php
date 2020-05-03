@@ -26,16 +26,14 @@ if($_SERVER["REQUEST_METHOD"] != "POST") {
 }
 if($_SERVER["REQUEST_METHOD"] == "POST"){
     if(isset($_POST['userprofile'])) {
-        echo "Go To User Profile";
         header("location: editAccount.php");
     }
     if(isset($_POST['leaderBoard'])) {
-        echo "Go To Leader Board";
         // Redirect user to welcome page
         header("location: user_leaderboard.php");
     }
     if(isset($_POST['all_quests'])) {
-        echo "Go To All Quests";
+        header("location: user_leaderboard.php");
         
     }
     if(isset($_POST['all_users'])) {
