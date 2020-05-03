@@ -10,7 +10,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 }
 
 $user_id = 0;
-$percent_complete = 0;
+//$percent_complete = 0;
 
 
 if($_SERVER["REQUEST_METHOD"] != "POST") {
