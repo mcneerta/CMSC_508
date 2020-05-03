@@ -43,7 +43,7 @@ if(($stmt_1 = $conn->prepare($sql_1)) && ($stmt_2 = $conn->prepare($sql_2))){
             $u_id = $row_2['user_id'];
             $u_attempts = $row_2['attempts'];
             $u_cur_points = $row_2['points_earned'];
-            if ($u_cur_points < 0){
+            if ($u_cur_points > 0){
                 $u_points = $u_cur_points;
                 $msg = "Quest Already Completed: ".$u_points." Points Earned";
             } else {
