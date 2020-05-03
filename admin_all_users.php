@@ -102,18 +102,18 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         </table>
     </div>
     <h3>All Players</h3>
-    <table border="1">
-        <tr>
-            <th>User ID</th>
-            <th>Username</th>
-            <th>Full Name</th>
-        </tr>
-    </table>
     <div class="scroll">
         <table>
             <?php
             if ($stmt = $conn->prepare($sql_users)){
                 if ($stmt->execute()){
+
+                    echo "<tr>";
+                    echo "<th>User ID</th>";
+                    echo "<th>Username</th>";
+                    echo "<th>Full Name</th>";
+                    echo "</tr>";
+
                     while ($row = $stmt->fetch()) {
                         echo "<tr>";
                         echo "<th>".$row['id']."</th>";
