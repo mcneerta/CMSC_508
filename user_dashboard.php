@@ -93,10 +93,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
         <div class="form-group">
-            <input type="submit" class="btn btn-primary" name="userprofile" value="Go To User Profile">
-        </div>
-
-        <div class="form-group">
             <input type="submit" class="btn btn-primary" name="leaderBoard" value="Go To Leader Board">
         </div>
 
@@ -110,6 +106,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
         <div class="form-group">
             <input type="submit" class="btn btn-primary" name="chatrooms" value="Go Chat Rooms">
+        </div>
+
+        <div class="form-group">
+            <input type="submit" class="btn btn-primary" name="userprofile" value="Update User Info">
         </div>
 
         <div class="form-group">
