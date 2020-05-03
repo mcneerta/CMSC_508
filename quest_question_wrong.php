@@ -6,7 +6,7 @@ session_start();
 $log_id = $_SESSION['id'];
 $cur_quest = $_SESSION['chosen_quest'];
 // call procedure here
-$sql_1 = "CALL quest_incr_attempt(".$log_id.", ".$cur_quest.", @new_attempts, @new_points);";
+$sql_1 = "CALL quest_incr_attempt(".$log_id.", ".$cur_quest.", @new_attempts);"; //, @new_points);";
 $sql_2 = "SELECT @new_attempts AS attempts, @new_points AS points;";
 
 
