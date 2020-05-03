@@ -69,7 +69,19 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 $stmt->bindValue(':login_id', $_SESSION["id"]);
                 $stmt->execute();
 
-                location.reload();
+                if(!isset($_SESSION['already_refreshed'])){
+
+                    //Number of seconds to refresh the page after.
+                    $refreshAfter = 0;
+
+                    //Send a Refresh header.
+                    header('Refresh: ' . $refreshAfter);
+
+                    //Set the session variable so that we don't
+                    //refresh again.
+                    $_SESSION['already_refreshed'] = true;
+
+                }
             }
         }
 
