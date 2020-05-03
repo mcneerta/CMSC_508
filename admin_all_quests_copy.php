@@ -10,26 +10,28 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 }
 
 
-$sql = "SELECT quest_id AS q_id,
-       quest_name AS q_name,
-       difficulty_level as q_level
+$sql = "SELECT quest_id AS q_id, quest_name AS q_name
             FROM tbl_quests 
-            ORDER BY q_level ASC , q_name ASC;";
+            ORDER BY q_name ASC;";
 
 if($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (isset($_POST['questref'])) {
-        $_SESSION['chosen_quest'] = $_POST['questref'];
-        header("location: admin_quest_selection.php");
-    }
-
     if (isset($_POST['home'])) {
         // Redirect user to welcome page
         header("location: login_redirect.php");
     }
 
-
+    if ($stmt = $conn->prepare($sql)) {
+        $stmt->bindValue(':login_id', $_SESSION["id"]);
+        if ($stmt->execute()) {
+            while ($row = $stmt->fetch()) {
+                if(isset($_POST['quest_'.$row['q_id']])) {
+                    $_SESSION['chosen_quest'] = $row['q_id'];
+                    header("location: admin_quest_selection.php");
+                }
+            }
+        }
+    }
 }
-
 ?>
 
 
@@ -50,62 +52,41 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
             width: 200px;
             margin: 2px;
         }
-        .container {
-            /*text-align:center*/
-            background-color: Transparent;
-            background-repeat:no-repeat;
-            border: none;
-            cursor:pointer;
-            overflow: hidden;
-            outline:none;
-            width: 200px;
-            text-align: center;
-
-        }
     </style>
 </head>
 <body>
 <div class="wrapper">
     <h2>All Quests</h2>
+
+
     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
 
 
-        <table border="1">
-            <tr>
-                <th>Level</th>
-                <th style="align-content: center">Quest Name</th>
-            </tr>
         <?php
-        $prev = 0;
         if ($stmt = $conn->prepare($sql)){
             $stmt->bindValue(':login_id', $_SESSION["id"]);
 //                    $stmt->bindValue(':login_id', 1);
             if ($stmt->execute()){
 //                        $counter = 0;
                 while ($row = $stmt->fetch()) {
-                    if ($prev != $row['q_level']){
-                        if ($prev != 0){
-                            echo "</table>";
-                            echo "</td>";
-                        }
-                        echo "<tr>";
-                        echo "<td align='center'>".$row['q_level']."</td>";
-                        echo "<td><table>";
-                        $prev = $row['q_level'];
-                        }
-                    echo "<tr>";
-                    echo "<td align='center'>";
-                    echo "<button class='container' type='submit' name='questref' value='".$row['q_id']."' >";
-                    echo "<p>".$row['q_name']."</p>";
-                    echo "</button>";
-                    echo "</td>";
-                    echo "</tr>";
+
+                    echo "<div class='form-group'>";
+                    $str = '<input type="submit" class="btn btn-primary" name="quest_'.$row['q_id'].'" value="'.$row['q_name'].'"';
+//                            echo "<input type='submit' class='btn btn-primary' name='quest_'".$row[q_id]." value='$row[q_name]'></input>";
+                    echo $str;
+                    echo "</div>";
+//                            $choices[$counter] = $row['q_id'];
+//                            $counter += 1;
                 }
             }
         }
         ?>
-        </table>
-        </table>
+
+
+
+        <ul>
+            <li onclick="$(this).closest('form').submit()"
+        </ul>
         <div class="form-group">
             <input type="submit" class="btn btn-primary" name="home" value="HOME">
         </div>
