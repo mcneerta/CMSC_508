@@ -9,6 +9,8 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     exit;
 }
 
+$user_id = 0;
+
 if($_SERVER["REQUEST_METHOD"] != "POST") {
 
     $sql = "
