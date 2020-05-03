@@ -74,6 +74,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     ";
 
         if($stmt_4 = $conn->prepare($sqlPercent)){
+            $stmt_4->bindValue(':login_id', $_SESSION["id"]);
             if($stmt_4->execute()) {
                 $row = $stmt_4->fetch();
                 $percent_complete = $row['percent_complete'];
