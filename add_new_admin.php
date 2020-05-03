@@ -8,7 +8,6 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     header("location: login.php");
     exit;
 }
-if($_SERVER["REQUEST_METHOD"] != "POST") {
 
     if (!isset($_POST['employee_id'])) {
 
@@ -41,5 +40,4 @@ if($_SERVER["REQUEST_METHOD"] != "POST") {
 
     }
 
-}
 ?>
