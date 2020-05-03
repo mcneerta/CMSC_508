@@ -8,7 +8,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     header("location: login.php");
     exit;
 }
-if($_SERVER["REQUEST_METHOD"] != "POST") {
+//if($_SERVER["REQUEST_METHOD"] != "POST") {
     if (!isset($_GET['user_id'])) {
 
         // Retrieve list of users
@@ -25,7 +25,7 @@ if($_SERVER["REQUEST_METHOD"] != "POST") {
         echo "</select>";
         echo "</form>";
     }
-}
+//}
 else if($_SERVER["REQUEST_METHOD"] == "POST"){
     if (isset($_POST['home'])) {
         // Redirect user to welcome page
