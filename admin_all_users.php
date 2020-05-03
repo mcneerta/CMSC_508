@@ -101,6 +101,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             ?>
         </table>
     </div>
+    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+        <div class="form-group">
+            <input type="submit" class="btn btn-primary" name="add_admin" value="Add Administrator">
+        </div>
+    </form>
     <h3>All Players</h3>
     <div class="scroll">
         <table>
@@ -129,12 +134,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     
     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
         <div class="form-group">
-            <input type="submit" class="btn btn-primary" name="add_admin" value="Add Administrator">
-        </div>
-        <div class="form-group">
             <input type="submit" class="btn btn-primary" name="home" value="Home">
         </div>
-
     </form>
 
 
