@@ -20,7 +20,14 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
         if(($stmt_1->execute()) && ($stmt_2->execute())){
             if ($row = $stmt_2->fetch()) {
                 $num_attempts = $row['attempts'];
-                $points = $row['points'];
+
+                if($num_attempts > 3){
+                    $points = 25;
+                }
+                else{
+                    $points = 100 - abs($num_attempts) * 25;
+                }
+
                 if($num_attempts > 0){
                     // quest is already completed
                     $msg = "Oh well, it seems as though you have already completed this quest with: ".$points." points earned.";
