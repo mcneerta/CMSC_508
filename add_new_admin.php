@@ -30,7 +30,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 
         $user_id = $_GET["user_id"];
 
-        $stmt = $conn->prepare("insert into tbl_admin values($user_id)");
+        $stmt = $conn->prepare("insert ignore into tbl_admin values($user_id)");
         $stmt->bindValue(':user_id', $user_id);
 
         if ($stmt->execute()) {
