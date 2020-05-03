@@ -19,9 +19,6 @@ if(isset($_GET['user_id'])) {
     }
 }
 
-else{
-    echo "User is already an admin";
-}
 
 if($_SERVER["REQUEST_METHOD"] == "POST") {
 
