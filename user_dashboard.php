@@ -79,7 +79,17 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     ";
             if(($stmt_1 = $conn->prepare($sql1)) && ($stmt_2 = $conn->prepare($sql2))){
                 $stmt_2->bindValue(':login_id', $_SESSION["id"]);
-                $stmt_1->execute();
+                if ($stmt_1->execute()){
+
+                    $row = $stmt_1->fetch();
+                    $username = $_SESSION['username'];
+                    $user_id = $row['user_id'];
+                    $level = $row['u_level'];
+                    $total_points = $row['total_points'];
+                    $percent_complete = $row['percent_complete'];
+                    $percent_complete = round($percent_complete * 100);
+
+                }
                 $stmt_2->execute();
 
             }
