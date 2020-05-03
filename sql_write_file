@@ -223,9 +223,14 @@ BEGIN
     SELECT point_value INTO q_points FROM tbl_quests WHERE quest_id = q_id;
     SELECT user_ID INTO u_id FROM tbl_user WHERE login_id = log_id;
 
+    # This if verifies that the user has not already completed the quest prior to adjusting the data
     IF (SELECT points_earned FROM tbl_completedquest WHERE quest_id = q_id AND player_id = u_id)  > 0 THEN
+        # If there exist points for this question under this user's id
+        # simply return the existing points to caller
         SELECT points_earned INTO points_won FROM tbl_completedquest WHERE quest_id = q_id AND player_id = u_id;
-    ELSE
+
+    ELSE  # else if no points exist, then update the data
+
         IF(SELECT attempts FROM tbl_completedquest
            WHERE quest_id = q_id AND player_id = u_id) IS NULL
         THEN
@@ -252,7 +257,43 @@ BEGIN
         END IF;
         SELECT points_earned INTo points_won FROM tbl_completedquest
         WHERE quest_id = q_id AND player_id = u_id;
+
     END IF;
 END//
 DELIMITER ;
+
+
+
+
+
+DROP TRIGGER IF EXISTS check_user_level_update;
+DELIMITER //
+CREATE TRIGGER check_user_level
+    AFTER UPDATE ON tbl_completedquest
+    FOR EACH ROW
+BEGIN
+    DECLARE percent_complete DECIMAL (4,3);
+    Select
+        ((SELECT COUNT(*) FROM tbl_completedquest c INNER JOIN tbl_quests d USING(quest_id) WHERE c.player_id = new.player_id AND d.difficulty_level = a.level)
+            /
+         (SELECT COUNT(*) FROM tbl_quests e WHERE e.difficulty_level = a.level ))
+            INTO percent_complete
+    FROM
+        tbl_player a
+    WHERE
+            player_id = new.player_id;
+    # if user percentage is 100% for the level they are all
+    IF percent_complete > 0.9 THEN
+        # and if the user level is not maxed out
+        IF (SELECT level FROM tbl_player WHERE player_id = new.player_id )
+            != (SELECT MAX(difficulty_level) FROM tbl_quests) THEN
+                # then update the the user level to the the next
+                UPDATE tbl_player SET level = level + 1 WHERE player_id = new.player_id;
+        END IF ;
+    END IF ;
+END //
+DELIMITER ;
+
+
+
 

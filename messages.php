@@ -110,7 +110,12 @@ if ($stmt = $conn->prepare("SELECT title FROM tbl_chatroom WHERE chatroom_id = :
             font-style: italic;
             font-size: xx-small;
         }
+        .msg{
+            width: 100%;
+            /*height: 100%;*/
+        }
     </style>
+
 </head>
 <body>
 <div class="wrapper">
@@ -121,9 +126,10 @@ if ($stmt = $conn->prepare("SELECT title FROM tbl_chatroom WHERE chatroom_id = :
             if ($stmt = $conn->prepare($sql)){
                 $stmt->bindValue(':chosen_chatroom', $_SESSION["chosen_chatroom"]);
                 if ($stmt->execute()){
+                    $counter = 0;
                     while ($row = $stmt->fetch()) {
                         if($row['user_id'] == $user_id){
-                            echo "<div class='container'>";
+                            echo "<div class='container' role='button' onclick='$(this).closest('form').submit()' >";
                             echo "<div class='container_message darker con_right' >";
                             echo "<div>";
                             echo "<p class='right username'>".$row['username']."</p>";
@@ -143,11 +149,13 @@ if ($stmt = $conn->prepare("SELECT title FROM tbl_chatroom WHERE chatroom_id = :
                             echo "</div>";
                             echo "</div>";
                         }
+                        $counter += 1;
                     }
                 }
             }
             ?>
     </div>
+    </form>
     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
         <div class="form-group">
             <label>Message</label>
@@ -161,7 +169,12 @@ if ($stmt = $conn->prepare("SELECT title FROM tbl_chatroom WHERE chatroom_id = :
         </div>
     </form>
 
-
 </div>
+<script>
+        function myclicktest(cb)
+        {
+          <?php// header("location: login_redirect.php");?>
+        }
+    </script>
 </body>
 </html>
