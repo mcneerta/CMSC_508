@@ -79,7 +79,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     ";
             if(($stmt_1 = $conn->prepare($sql1)) && ($stmt_2 = $conn->prepare($sql2))){
                 $stmt_2->bindValue(':login_id', $_SESSION["id"]);
-                if ($stmt_2->execute()){
+                $stmt_1->execute();
+                if ($stmt_2->execute()) {
 
                     $row = $stmt_2->fetch();
                     $username = $_SESSION['username'];
@@ -90,8 +91,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                     $percent_complete = round($percent_complete * 100);
 
                 }
-                $stmt_1->execute();
-
             }
         }
 
