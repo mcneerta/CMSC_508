@@ -63,25 +63,24 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     }
     if(isset($_POST['level_up'])) {
         if($percent_complete = 100){
-            $sql = "update tbl_player set level = level + 1 where player_id = $user_id";
+            $sql1 = "update tbl_player set level = level + 1 where player_id = $user_id";
+            $sql2 = "
+    Select a.user_id as user_id, b.level AS u_level, 
+    IFNULL((SELECT SUM(z.points_earned)  FROM tbl_completedquest z WHERE z.player_id = user_id), 0) AS total_points,
+        ((SELECT COUNT(*) FROM tbl_completedquest c INNER JOIN tbl_quests d USING(quest_id) WHERE c.player_id = user_id AND d.difficulty_level = u_level)
+        /
+        (SELECT COUNT(*) FROM tbl_quests e WHERE e.difficulty_level = u_level ))
+    AS percent_complete
+    FROM 
+    tbl_user a
+    INNER JOIN tbl_player b
+    ON a.user_id = b.player_id
+    WHERE a.login_id = :login_id;
+    ";
+            if(($stmt_1 = $conn->prepare($sql1)) && ($stmt_2 = $conn->prepare($sql2))){
+                $stmt_1->execute();
+                $stmt_2->execute();
 
-            if ($stmt = $conn->prepare($sql)) {
-                $stmt->bindValue(':login_id', $_SESSION["id"]);
-                $stmt->execute();
-
-                if(!isset($_SESSION['already_refreshed'])){
-
-                    //Number of seconds to refresh the page after.
-                    $refreshAfter = 0;
-
-                    //Send a Refresh header.
-                    header('Refresh: ' . $refreshAfter);
-
-                    //Set the session variable so that we don't
-                    //refresh again.
-                    $_SESSION['already_refreshed'] = true;
-
-                }
             }
         }
 
