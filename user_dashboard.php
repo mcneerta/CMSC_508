@@ -63,7 +63,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     }
     if(isset($_POST['level_up'])) {
         if($percent_complete = 100){
-            $sql = "update tbl_player set level = level + 1 where user_id = $user_id";
+            $sql = "update tbl_player set level = level + 1 where player_id = $user_id";
 
             if ($stmt = $conn->prepare($sql)) {
                 $stmt->bindValue(':login_id', $_SESSION["id"]);
