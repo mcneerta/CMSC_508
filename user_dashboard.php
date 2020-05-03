@@ -59,6 +59,21 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     if(isset($_POST['chatrooms'])) {
         header("location: chatrooms.php");
     }
+    if(isset($_POST['level_up'])) {
+        if($percent_complete = 100){
+            $sql = "update tbl_player set level = level + 1 where user_id = $user_id";
+
+            if ($stmt = $conn->prepare($sql)) {
+                $stmt->bindValue(':login_id', $_SESSION["id"]);
+                $stmt->execute();
+            }
+        }
+
+        else{
+            echo "You must complete all quests for your current level before leveling up.";
+        }
+
+    }
     if(isset($_POST['logout'])) {
         header("location: logout.php");
     }
@@ -110,6 +125,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
         <div class="form-group">
             <input type="submit" class="btn btn-primary" name="userprofile" value="Update User Info">
+        </div>
+
+        <div class="form-group">
+            <input type="submit" class="btn btn-primary" name="level_up" value="Level Up">
         </div>
 
         <div class="form-group">
