@@ -8,7 +8,6 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     header("location: login.php");
     exit;
 }
-//if($_SERVER["REQUEST_METHOD"] != "POST") {
     if (!isset($_GET['user_id'])) {
 
         // Retrieve list of users
@@ -25,7 +24,10 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
         echo "</select>";
         echo "</form>";
     }
-//}
+    else{
+        $user_id = $_GET["user_id"];
+    }
+
 if($_SERVER["REQUEST_METHOD"] == "POST"){
     if (isset($_POST['home'])) {
         // Redirect user to welcome page
@@ -33,8 +35,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     }
 
     if (isset($_POST['confirm'])) {
-        $user_id = $_GET["user_id"];
-
         $stmt = $conn->prepare("insert ignore into tbl_admin values($user_id)");
         $stmt->bindValue(':user_id', $user_id);
 
