@@ -16,6 +16,7 @@ if (!isset($_GET['user_id'])) {
 
     echo "<form method='get'>";
     echo "<select name='user_id' onchange='this.form.submit();'>";
+    echo "<option hidden disabled selected value> -- select an option -- </option>";
 
     while ($row = $stmt->fetch()) {
         echo "<option value='$row[user_id]'>$row[first_name] $row[last_name]</option>";
