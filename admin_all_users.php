@@ -77,18 +77,18 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     <p> Your Username: <?php echo $username ?> </p>
 
     <h3>Administrative Users</h3>
-    <table>
-        <tr>
-            <th>User ID</th>
-            <th>Username</th>
-            <th>Full Name</th>
-        </tr>
-    </table>
     <div class="scroll">
         <table>
             <?php
             if ($stmt = $conn->prepare($sql_admins)){
                 if ($stmt->execute()){
+
+                    echo "<tr>";
+                    echo "<th>User ID</th>";
+                    echo "<th>Username</th>";
+                    echo "<th>Full Name</th>";
+                    echo "</tr>";
+
                     while ($row = $stmt->fetch()) {
                         echo "<tr>";
                         echo "<th>".$row['id']."</th>";
