@@ -32,7 +32,7 @@ if($_SERVER["REQUEST_METHOD"] != "POST") {
 
 if ($_SERVER["REQUEST_METHOD"] == "POST"){
     if(isset($_POST['cancel'])){
-        header("location: admin_quest_selection.php");
+        header("location: admin_all_quests.php");
     }
     if(isset($_POST['answer'])){
         header("location: quest_question.php");
