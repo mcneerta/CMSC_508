@@ -68,6 +68,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             if ($stmt = $conn->prepare($sql)) {
                 $stmt->bindValue(':login_id', $_SESSION["id"]);
                 $stmt->execute();
+
+                location.reload();
             }
         }
 
