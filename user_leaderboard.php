@@ -28,9 +28,7 @@ WHERE (SELECT IFNULL(SUM(b.points_earned),0) FROM tbl_completedquest b WHERE b.p
          AND a.login_id = c.login_id
     WHERE (SELECT IFNULL(SUM(d.points_earned),0) FROM tbl_completedquest d WHERE d.player_id 
                     = (SELECT z.user_id FROM tbl_user z WHERE z.login_id = :login_id) ) 
-            <=
-            (SELECT IFNULL(SUM(e.points_earned),0) FROM tbl_completedquest e WHERE e.player_id 
-                    = a.user_id)
+            
     ORDER BY points DESC
     LIMIT 10;
     ";
