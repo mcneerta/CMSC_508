@@ -47,7 +47,7 @@ if(($stmt_1 = $conn->prepare($sql_1)) && ($stmt_2 = $conn->prepare($sql_2))){
                 $u_points = $u_cur_points;
                 $msg = "Quest Already Completed: ".$u_points." Points Earned";
             } else {
-                $u_points = $q_pts - ((($u_attempts - 1) * ($q_pts) / 4));
+                $u_points = $q_pts + ((($u_attempts - 1) * ($q_pts) / 4));
 
                 $msg = "Quest Not Completed: ".$u_points." Points Possible";
             }
