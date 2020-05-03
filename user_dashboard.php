@@ -78,6 +78,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     WHERE a.login_id = :login_id;
     ";
             if(($stmt_1 = $conn->prepare($sql1)) && ($stmt_2 = $conn->prepare($sql2))){
+                $stmt_2->bindValue(':login_id', $_SESSION["id"]);
                 $stmt_1->execute();
                 $stmt_2->execute();
 
