@@ -40,49 +40,53 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
     if(isset($_POST['submit'])) {
         if (empty(trim($_POST["title"]))) {
-            $first_name_err = "Invalid Entry.";
+            $q_name_err = "Invalid Entry.";
         } else {
-            $first_name = trim($_POST["title"]);
+            $q_name = trim($_POST["title"]);
         }
         if (empty(trim($_POST["desc"]))) {
-            $first_name_err = "Invalid Entry.";
+            $q_desc_err = "Invalid Entry.";
         } else {
-            $first_name = trim($_POST["desc"]);
+            $q_desc = trim($_POST["desc"]);
+        }if (empty(trim($_POST["level"]))) {
+            $q_level_err = "Invalid Entry.";
+        } else {
+            $q_level = trim($_POST["level"]);
         }
         if (empty(trim($_POST["points"]))) {
-            $first_name_err = "Invalid Entry.";
+            $q_points_err = "Invalid Entry.";
         } else {
-            $first_name = trim($_POST["points"]);
+            $q_points = trim($_POST["points"]);
         }
         if (empty(trim($_POST["question"]))) {
-            $first_name_err = "Invalid Entry.";
+            $q_question_err = "Invalid Entry.";
         } else {
-            $first_name = trim($_POST["question"]);
+            $q_question = trim($_POST["question"]);
         }
         if (empty(trim($_POST["answer_a"]))) {
-            $first_name_err = "Invalid Entry.";
+            $q_answer_a_err = "Invalid Entry.";
         } else {
-            $first_name = trim($_POST["title"]);
+            $q_answer_a = trim($_POST["title"]);
         }
         if (empty(trim($_POST["answer_b"]))) {
-            $first_name_err = "Invalid Entry.";
+            $q_answer_b_err = "Invalid Entry.";
         } else {
-            $first_name = trim($_POST["title"]);
+            $q_answer_b = trim($_POST["title"]);
         }
         if (empty(trim($_POST["answer_c"]))) {
-            $first_name_err = "Invalid Entry.";
+            $q_answer_c_err = "Invalid Entry.";
         } else {
-            $first_name = trim($_POST["title"]);
+            $q_answer_c = trim($_POST["title"]);
         }
         if (empty(trim($_POST["answer_d"]))) {
-            $first_name_err = "Invalid Entry.";
+            $q_answer_d_err = "Invalid Entry.";
         } else {
-            $first_name = trim($_POST["title"]);
+            $q_answer_d = trim($_POST["title"]);
         }
         if (empty(trim($_POST["correct"]))) {
-            $first_name_err = "Invalid Entry.";
+            $q_correct_err = "Invalid Entry.";
         } else {
-            $first_name = trim($_POST["correct"]);
+            $q_correct = trim($_POST["correct"]);
         }
 
 
