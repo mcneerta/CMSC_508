@@ -66,22 +66,22 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         if (empty(trim($_POST["answer_a"]))) {
             $q_answer_a_err = "Invalid Entry.";
         } else {
-            $q_answer_a = trim($_POST["title"]);
+            $q_answer_a = trim($_POST["answer_a"]);
         }
         if (empty(trim($_POST["answer_b"]))) {
             $q_answer_b_err = "Invalid Entry.";
         } else {
-            $q_answer_b = trim($_POST["title"]);
+            $q_answer_b = trim($_POST["answer_b"]);
         }
         if (empty(trim($_POST["answer_c"]))) {
             $q_answer_c_err = "Invalid Entry.";
         } else {
-            $q_answer_c = trim($_POST["title"]);
+            $q_answer_c = trim($_POST["answer_c"]);
         }
         if (empty(trim($_POST["answer_d"]))) {
             $q_answer_d_err = "Invalid Entry.";
         } else {
-            $q_answer_d = trim($_POST["title"]);
+            $q_answer_d = trim($_POST["answer_d"]);
         }
         if (empty(trim($_POST["correct"]))) {
             $q_correct_err = "Invalid Entry.";
