@@ -31,6 +31,7 @@ if($_SERVER["REQUEST_METHOD"] != "POST") {
         if ($stmt->execute()){
             if($stmt->rowCount() == 1){
                 $_SESSION['isAdmin'] = true;
+                $isAdmin = true;
             }
         }
     }
@@ -60,6 +61,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             if ($stmt->execute()){
                 if($stmt->rowCount() == 1){
                     $_SESSION['isAdmin'] = true;
+                    $isAdmin = true;
                 }
             }
         }
@@ -161,7 +163,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             echo "<div class='form-group'>";
             echo "<input type='submit' class='btn btn_primary' name='submitNewRoom' value='Submit'>";
             echo "</div>";
-        } else if ($_SESSION['isAdmin']) {
+        } else if ($isAdmin) {
             echo "<div class='form-group'>";
             echo "<input type='submit' class='btn btn_primary' name='addroom' value='Add Chatroom'>";
             echo "</div>";
