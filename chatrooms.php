@@ -70,7 +70,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 if(isset($_POST['chat_'.$row['chatroom_id']])) {
                     $_SESSION['chosen_chatroom'] = $row['chatroom_id'];
 //                    echo "<p>Sending you to the chosen chatroom in the future</p>";
-                    header("location: messages.php");
+                    if(!$isAdmin) {
+                        header("location: messages.php");
+                    }
+                    else{
+                        header("location: admin_messages.php");
+                    }
                 }
             }
         }
