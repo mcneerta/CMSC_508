@@ -169,7 +169,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 <div class="wrapper">
     <h2>New Questsr</h2>
     <p>Please fill in the information for the quest.</p>
-    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" enctype="multipart/form-data">
         <div class="form-group <?php echo (!empty($q_name_err)) ? 'has-error' : ''; ?>">
             <label>Title</label>
             <input type="text" name="title" class="form-control">
