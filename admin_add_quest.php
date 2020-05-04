@@ -88,7 +88,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
         $filename = $_POST["fileToUpload"]; //["name"];
         echo "<p>$filename</p>";
-        $imagePath = "image/" . $filename;
+        $imagePath = "images/" . $filename;
         echo "<p>$imagePath</p>";
         $check = $q_name_err
             . $q_desc_err
@@ -158,7 +158,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>New User</title>
+    <title>New Quests</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
     <style type="text/css">
         body{ font: 14px sans-serif; }
@@ -167,8 +167,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 </head>
 <body>
 <div class="wrapper">
-    <h2>New User</h2>
-    <p>Please fill in your profile information.</p>
+    <h2>New Questsr</h2>
+    <p>Please fill in the information for the quest.</p>
     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
         <div class="form-group <?php echo (!empty($q_name_err)) ? 'has-error' : ''; ?>">
             <label>Title</label>
