@@ -30,7 +30,7 @@ if($_SERVER["REQUEST_METHOD"] != "POST") {
         $stmt->bindValue(':login_id', $_SESSION["id"]);
         if ($stmt->execute()){
             if($stmt->rowCount() == 1){
-                $isAdmin = true;
+                $_SESSION['isAdmin'] = true;
             }
         }
     }
