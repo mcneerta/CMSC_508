@@ -144,13 +144,15 @@ if ($stmt = $conn->prepare("SELECT title FROM tbl_chatroom WHERE chatroom_id = :
                             echo "</tr>";
 
                         } else {
-                            echo "<div class='container'>";
-                            echo "<div class='container_message' >";
-                            echo "<p class='username'>" . $row['username'] . "</p>";
-                            echo "<p>" . $row['message'] . "</p>";
+                            echo "<tr>";
+                            echo "<td align='center'>";
+                            echo "<button class='container' type='submit' name='questref' value='' >";
+                            echo "<p class='right username'>".$row['username']."</p>";
+                            echo "<p class='right'>".$row['message']."</p>";
                             echo "<span class='time-left'>".$row['time_stamp']."</span>";
-                            echo "</div>";
-                            echo "</div>";
+                            echo "</button>";
+                            echo "</td>";
+                            echo "</tr>";
                         }
                         $counter += 1;
                     }
