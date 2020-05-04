@@ -177,8 +177,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 </head>
 <body>
 <div class="wrapper">
-    <h2>New User</h2>
-    <p>Please fill in your profile information.</p>
+    <h2>New Quest</h2>
+    <p>Please fill in the information for the new quest.</p>
     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" enctype="multipart/form-data" >
         <div class="form-group <?php echo (!empty($q_name_err)) ? 'has-error' : ''; ?>">
             <label>Title</label>
