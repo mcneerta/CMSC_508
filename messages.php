@@ -140,7 +140,6 @@ if ($stmt = $conn->prepare("SELECT title FROM tbl_chatroom WHERE chatroom_id = :
                             echo "<tr>";
                             echo "<td align='right'>";
                             echo "<button class='container' type='submit' name='look_message' value='".$row['message']."' >";
-                            echo "<p>" . $row['message'] . "</p>";
                             echo "<span class='time-right'>".$row['time_stamp']."</span>";
                             echo "</button>";
                             echo "</td>";
