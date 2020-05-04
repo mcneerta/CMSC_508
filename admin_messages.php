@@ -43,6 +43,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
             if ($stmt->execute()) {
                 // message uploaded
             }
+        }
     }
 
     if (isset($_POST['submit'])) {
