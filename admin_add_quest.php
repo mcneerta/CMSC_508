@@ -90,9 +90,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         }
 
 
-        $filename = $_POST["fileToUpload"]; //["name"];
+//        $filename = $_POST["fileToUpload"]["name"];
+        $filename = "Not_a_real_filename.jpeg";
         echo "<p>$filename</p>";
-        $imagePath = "images/" . $filename;
+        $imagePath = "image/" . $filename;
         echo "<p>$imagePath</p>";
         $check = $q_name_err
             . $q_desc_err
@@ -122,6 +123,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                     INSERT INTO tbl_quests(quest_name, description, point_value,difficulty_level, question_id, image_a, added_by)
                     VALUES (:quest_name, :description, :point_value,:difficulty_level, LAST_INSERT_ID(), :image_a, :added_by);";
 
+//            $rnd_2 = 'INSERT INTO tbl_question(question, answer_1, answer_2, answer_3, answer_4, correct)
+//                        VALUES ("'.$q_question.'", "'.$q_answer_a.'", "'.$q_answer_b.'", "'.$q_answer_c.'", "'.$q_answer_d.'", '.$q_correct.');
+//                        INSERT INTO tbl_quests(quest_name, description, point_value,difficulty_level, question_id, image_a, added_by)
+//                        VALUES ("'.$q_name.'", "'.$q_desc.'", '.$q_points.', '.$q_level.', LAST_INSERT_ID(), "'.$imagePath.'", '.$u_id.');';
 
             if ($stmt = $conn->prepare($sql)) {
 
@@ -143,7 +148,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 // Attempt to execute the prepared statement
                 if ($stmt->execute()) {
                     // Redirect to login page
-                    header("location: upload.php");
+//                    header("location: upload.php");
+                    header("location: admin_all_quests.php");
                 } else {
                     echo "Something went wrong. Please try again later.";
                 }
@@ -162,7 +168,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>New Quests</title>
+    <title>New User</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
     <style type="text/css">
         body{ font: 14px sans-serif; }
@@ -171,9 +177,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 </head>
 <body>
 <div class="wrapper">
-    <h2>New Questsr</h2>
-    <p>Please fill in the information for the quest.</p>
-    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" enctype="multipart/form-data">
+    <h2>New User</h2>
+    <p>Please fill in your profile information.</p>
+    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" enctype="multipart/form-data" >
         <div class="form-group <?php echo (!empty($q_name_err)) ? 'has-error' : ''; ?>">
             <label>Title</label>
             <input type="text" name="title" class="form-control">
