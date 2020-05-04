@@ -36,7 +36,13 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     if (isset($_POST['look_message'])) {
-        header("location: chatrooms.php");
+        $_SESSION['timestamp'] = $_POST['look_message'];
+        $sql_message = "delete from tbl_messages where time_stamp = :timestamp";
+        if ($stmt = $conn->prepare($sql_message)) {
+            $stmt->bindParam(":timestamp", $_SESSION['timestamp'], PDO::PARAM_STR);
+            if ($stmt->execute()) {
+                // message uploaded
+            }
     }
 
     if (isset($_POST['submit'])) {
@@ -137,7 +143,7 @@ if ($stmt = $conn->prepare("SELECT title FROM tbl_chatroom WHERE chatroom_id = :
                         if($row['user_id'] == $user_id){
                             echo "<tr>";
                             echo "<td align='center'>";
-                            echo "<button class='container' type='submit' name='look_message' value='' >";
+                            echo "<button class='container' type='submit' name='look_message' value='".$row['time_stamp']."' >";
                             echo "<p class='right username'>".$row['username']."</p>";
                             echo "<p class='right'>".$row['message']."</p>";
                             echo "<span class='time-right'>".$row['time_stamp']."</span>";
@@ -148,7 +154,7 @@ if ($stmt = $conn->prepare("SELECT title FROM tbl_chatroom WHERE chatroom_id = :
                         } else {
                             echo "<tr>";
                             echo "<td align='center'>";
-                            echo "<button class='container' type='submit' name='look_message' value='' >";
+                            echo "<button class='container' type='submit' name='look_message' value='".$row['time_stamp']."'  >";
                             echo "<p class='right username'>".$row['username']."</p>";
                             echo "<p class='right'>".$row['message']."</p>";
                             echo "<span class='time-left'>".$row['time_stamp']."</span>";
