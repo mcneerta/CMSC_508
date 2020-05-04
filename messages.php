@@ -35,10 +35,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
         header("location: chatrooms.php");
     }
 
-    if (isset($_POST['look_message'])) {
-        header("location: chatrooms.php");
-    }
-
     if (isset($_POST['submit'])) {
         if(!empty(trim($_POST["user_message"]))){
             $message = trim($_POST["user_message"]);
