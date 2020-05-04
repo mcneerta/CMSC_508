@@ -59,7 +59,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             $stmt->bindValue(':creator_id', $user_id);
             if ($stmt->execute()){
                 if($stmt->rowCount() == 1){
-                    $isAdmin = true;
+                    $_SESSION['isAdmin'] = true;
                 }
             }
         }
@@ -70,7 +70,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 if(isset($_POST['chat_'.$row['chatroom_id']])) {
                     $_SESSION['chosen_chatroom'] = $row['chatroom_id'];
 //                    echo "<p>Sending you to the chosen chatroom in the future</p>";
-                    if($isAdmin) {
+                    if($_SESSION['isAdmin']) {
                         header("location: admin_messages.php");
                     }
                     else{
