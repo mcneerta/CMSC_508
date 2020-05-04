@@ -34,6 +34,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
         // Redirect user to welcome page
         header("location: chatrooms.php");
     }
+
+    if (isset($_POST['look_message'])) {
+        echo "Clicked on message";
+    }
     if (isset($_POST['submit'])) {
         if(!empty(trim($_POST["user_message"]))){
             $message = trim($_POST["user_message"]);
