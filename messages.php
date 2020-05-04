@@ -135,7 +135,7 @@ if ($stmt = $conn->prepare("SELECT title FROM tbl_chatroom WHERE chatroom_id = :
                         if($row['user_id'] == $user_id){
                             echo "<tr>";
                             echo "<td align='center'>";
-                            echo "<button class='container' type='submit' name='questref' value='".$row['q_id']."' >";
+                            echo "<button class='container' type='submit' name='questref' value='' >";
                             echo "<p class='right username'>".$row['username']."</p>";
                             echo "<p class='right'>".$row['message']."</p>";
                             echo "<span class='time-right'>".$row['time_stamp']."</span>";
