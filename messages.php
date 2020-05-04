@@ -133,17 +133,17 @@ if ($stmt = $conn->prepare("SELECT title FROM tbl_chatroom WHERE chatroom_id = :
                     $counter = 0;
                     while ($row = $stmt->fetch()) {
                         if($row['user_id'] == $user_id){
+                            echo "<div class='container' role='button' onclick='$(this).closest('form').submit()' >";
                             echo "<div class='container_message darker con_right' >";
                             echo "<div>";
                             echo "<p class='right username'>".$row['username']."</p>";
                             echo "</div>";
-                            echo "<tr>";
-                            echo "<td align='right'>";
-                            echo "<button class='container' type='submit' name='look_message' value='".$row['message']."' >";
+                            echo "<div>";
+                            echo "<p class='right'>".$row['message']."</p>";
                             echo "<span class='time-right'>".$row['time_stamp']."</span>";
-                            echo "</button>";
-                            echo "</td>";
-                            echo "</tr>";
+                            echo "</div>";
+                            echo "</div>";
+                            echo "</div>";
 
 
                         } else {
