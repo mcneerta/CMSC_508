@@ -27,6 +27,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
         header("location: login_redirect.php");
     }
 
+    if (isset($_POST['add'])) {
+        // Redirect user to welcome page
+        header("location: admin_add_quest.php");
+    }
 
 }
 
@@ -107,7 +111,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
         </table>
         </table>
         <div class="form-group">
-            <input type="submit" class="btn btn-primary" name="home" value="HOME">
+            <input type="submit" class="btn btn-primary" name="add" value="Add Quest">
+        </div>
+        <div class="form-group">
+            <input type="submit" class="btn btn-primary" name="home" value="Home">
         </div>
     </form>
 </div>
